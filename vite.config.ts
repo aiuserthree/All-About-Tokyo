@@ -64,5 +64,12 @@
     server: {
       port: 3000,
       open: true,
+      proxy: {
+        '/api/weather': {
+          target: 'https://api.open-meteo.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/weather/, '/v1/forecast?latitude=35.6762&longitude=139.6503&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Asia%2FTokyo')
+        }
+      }
     },
   });

@@ -54,9 +54,17 @@ const getWeatherCondition = (weatherCode: number): { condition: string; descript
 // 도쿄 날씨 정보 가져오기
 export async function getTokyoWeather(): Promise<WeatherData> {
   try {
-    // Vercel API Route를 통한 프록시 (CORS 문제 해결)
-    const apiUrl = '/api/weather';
-    const response = await fetch(apiUrl);
+    // 개발환경에서는 Vite 프록시 사용, 프로덕션에서는 직접 호출
+    const apiUrl = process.env.NODE_ENV === 'development' 
+      ? '/api/weather'  // Vite 프록시 사용
+      : 'https://api.open-meteo.com/v1/forecast?latitude=35.6762&longitude=139.6503&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Asia%2FTokyo';
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
+    });
 
     if (!response.ok) {
       throw new Error(`날씨 API 오류: ${response.status}`);
