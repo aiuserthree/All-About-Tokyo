@@ -28,6 +28,11 @@ export function LocationBasedScreen({ onBack }: LocationBasedScreenProps) {
   const [locationPermission, setLocationPermission] = useState<boolean | null>(null);
   const [recommendationMode, setRecommendationMode] = useState<string>("");
 
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   // 위치 권한 요청 및 현재 위치 가져오기
   const getCurrentLocation = () => {
     setIsLoading(true);

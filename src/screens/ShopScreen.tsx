@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { LocationSelector } from "../components/LocationSelector";
@@ -11,6 +11,11 @@ import { placesByLocation } from "../data/tokyoLocations";
 export function ShopScreen() {
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   // 지역별 쇼핑 데이터 가져오기
   const getShoppingByLocation = () => {

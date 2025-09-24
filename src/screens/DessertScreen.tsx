@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { FilterChips } from "../components/FilterChips";
@@ -12,6 +12,11 @@ export function DessertScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all");
+
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const filters = ["기념품", "디저트", "인스타", "전통", "현대", "한정판", "가성비"];
 

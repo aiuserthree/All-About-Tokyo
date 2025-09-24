@@ -41,6 +41,8 @@ export default function App() {
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    // 탭 변경 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleFABClick = () => {
@@ -48,6 +50,8 @@ export default function App() {
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    // AI 채팅 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleFlightInfoClick = () => {
@@ -55,6 +59,8 @@ export default function App() {
     setShowAIChat(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    // 항공권 정보 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleHotelInfoClick = () => {
@@ -62,6 +68,8 @@ export default function App() {
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowLocationBased(false);
+    // 호텔 정보 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleFlightInfoBack = () => {
@@ -77,6 +85,8 @@ export default function App() {
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
+    // 위치 기반 추천 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLocationBasedBack = () => {
@@ -89,6 +99,8 @@ export default function App() {
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    // 홈 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavigateToTab = (tabIndex: number) => {
@@ -99,6 +111,8 @@ export default function App() {
       setShowFlightInfo(false);
       setShowHotelInfo(false);
       setShowLocationBased(false);
+      // 탭으로 이동 시 최상단으로 스크롤
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

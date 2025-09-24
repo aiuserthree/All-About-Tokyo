@@ -135,7 +135,7 @@ export function FlightInfoScreen({ onBack }: FlightInfoScreenProps) {
               <span className="text-muted-foreground">총 요금</span>
               <span className="text-lg font-semibold">₩300,400</span>
             </div>
-            <div className="pt-2 border-t border-border">
+            <div className="pt-4 border-t border-border">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">1인 기준 가격</span>
                 <Badge variant="secondary">성인</Badge>

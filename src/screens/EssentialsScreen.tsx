@@ -1,9 +1,15 @@
+import { useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { AlertTriangle, Phone, BookOpen, MessageSquare, Heart } from "lucide-react";
 
 export function EssentialsScreen() {
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const essentialSections = [
     {
       icon: <Heart className="w-6 h-6 text-red-500" />,

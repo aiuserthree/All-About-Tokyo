@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { FilterChips } from "../components/FilterChips";
@@ -12,6 +12,11 @@ export function SeeDoScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const filters = ["무료", "실내", "야외", "역사", "현대", "가족", "사진", "체험"];
 

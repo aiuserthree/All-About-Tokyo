@@ -18,6 +18,11 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreen
   
   // 날씨 상태 관리
   const [weather, setWeather] = useState<WeatherData | null>(null);
+
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const [weatherLoading, setWeatherLoading] = useState(true);
 
   // 날씨 정보 가져오기

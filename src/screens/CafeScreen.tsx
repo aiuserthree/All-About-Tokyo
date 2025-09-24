@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { FilterChips } from "../components/FilterChips";
@@ -12,6 +12,11 @@ export function CafeScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all");
+
+  // 화면 마운트 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const filters = ["데이트", "트렌디", "프리미엄", "24시간", "야간", "그룹", "인스타", "아이동반"];
 
