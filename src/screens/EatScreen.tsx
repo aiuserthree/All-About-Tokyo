@@ -53,8 +53,14 @@ export function EatScreen() {
       <AppBar />
       
       <div className="pb-24">
+        {/* Header */}
+        <div className="p-4 space-y-2">
+          <h1 className="text-2xl font-bold">🍜 맛집 & 음식</h1>
+          <p className="text-muted-foreground">도쿄의 맛있는 음식을 만나보세요</p>
+        </div>
+
         {/* Search and Location */}
-        <div className="p-4 space-y-4">
+        <div className="px-4 pt-4 pb-4 space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input

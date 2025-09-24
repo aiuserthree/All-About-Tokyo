@@ -63,7 +63,7 @@ export function EssentialsScreen() {
       <div className="pb-24 space-y-6">
         {/* Header */}
         <div className="p-4 space-y-2">
-          <h1 className="text-2xl font-bold">필수 정보</h1>
+          <h1 className="text-2xl font-bold">📋 필수 정보</h1>
           <p className="text-muted-foreground">안전하고 즐거운 여행을 위한 필수 정보</p>
         </div>
 

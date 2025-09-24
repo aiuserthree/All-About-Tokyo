@@ -73,15 +73,18 @@ export function CafeScreen() {
     <div className="min-h-screen bg-background">
       <AppBar />
       
-      <div className="p-4 space-y-6">
+      <div className="pb-24">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold">☕ 카페 & 바</h1>
+        <div className="p-4 space-y-2">
+          <h1 className="text-2xl font-bold">☕ 카페 & 바</h1>
           <p className="text-muted-foreground">도쿄의 특별한 카페와 바를 찾아보세요</p>
         </div>
 
+        <div className="p-4 space-y-6">
+
         {/* Search */}
-        <div className="relative">
+        <div className="pt-4">
+          <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
             placeholder="카페 이름이나 종류로 검색..."
@@ -89,6 +92,7 @@ export function CafeScreen() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
           />
+          </div>
         </div>
 
         {/* Location Selector */}
@@ -175,6 +179,7 @@ export function CafeScreen() {
             <li>• 일본 카페는 흡연 구역이 따로 있음</li>
           </ul>
         </Card>
+        </div>
       </div>
     </div>
   );

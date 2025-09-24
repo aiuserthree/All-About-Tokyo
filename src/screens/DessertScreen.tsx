@@ -100,15 +100,18 @@ export function DessertScreen() {
     <div className="min-h-screen bg-background">
       <AppBar />
       
-      <div className="p-4 space-y-6">
+      <div className="pb-24">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold">🍰 디저트 & 과자</h1>
+        <div className="p-4 space-y-2">
+          <h1 className="text-2xl font-bold">🍰 디저트 & 과자</h1>
           <p className="text-muted-foreground">일본의 달콤한 디저트와 특별한 과자를 만나보세요</p>
         </div>
 
+        <div className="p-4 space-y-6">
+
         {/* Search */}
-        <div className="relative">
+        <div className="px-4 pt-4 pb-4">
+          <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
             placeholder="디저트 이름이나 종류로 검색..."
@@ -116,6 +119,7 @@ export function DessertScreen() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
           />
+          </div>
         </div>
 
         {/* Location Selector */}
@@ -223,6 +227,7 @@ export function DessertScreen() {
             <li>• 면세점에서 구매하면 추가 할인 혜택</li>
           </ul>
         </Card>
+        </div>
       </div>
     </div>
   );

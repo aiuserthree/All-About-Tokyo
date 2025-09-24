@@ -57,16 +57,17 @@ export function ShopScreen() {
   return (
     <div className="min-h-screen bg-background">
       <AppBar />
+      
+      {/* Header */}
+      <div className="p-4 space-y-2">
+        <h1 className="text-2xl font-bold">🛍️ 쇼핑 & 구매</h1>
+        <p className="text-muted-foreground">도쿄의 쇼핑 명소와 기념품을 찾아보세요</p>
+      </div>
 
       <div className="pb-24 space-y-6">
-        {/* Header */}
-        <div className="p-4 space-y-2">
-          <h1 className="text-2xl font-bold">쇼핑</h1>
-          <p className="text-muted-foreground">도쿄 최고의 쇼핑 스팟을 만나보세요</p>
-        </div>
 
         {/* Search */}
-        <div className="px-4 pb-4">
+        <div className="px-4 pt-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
