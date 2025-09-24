@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Plane, X, Home, MessageCircle, Hotel } from "lucide-react";
+import { Plus, Plane, X, Home, MessageCircle, Hotel, Radio } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
@@ -8,9 +8,10 @@ interface FloatingMenuProps {
   onHotelInfoClick: () => void;
   onHomeClick: () => void;
   onAIChatClick: () => void;
+  onLiveInfoClick?: () => void;
 }
 
-export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick, onAIChatClick }: FloatingMenuProps) {
+export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick, onAIChatClick, onLiveInfoClick }: FloatingMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -70,6 +71,18 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
                 <MessageCircle className="w-4 h-4 text-purple-600" />
                 AI 채팅
               </Button>
+              
+              {onLiveInfoClick && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleMenuClick(onLiveInfoClick)}
+                  className="w-full justify-start gap-3 text-sm font-medium"
+                >
+                  <Radio className="w-4 h-4 text-red-600" />
+                  실시간 정보
+                </Button>
+              )}
               
             </CardContent>
           </Card>

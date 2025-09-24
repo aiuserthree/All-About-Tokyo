@@ -13,6 +13,7 @@ import { AIChatScreen } from "./screens/AIChatScreen";
 import { FlightInfoScreen } from "./screens/FlightInfoScreen";
 import { HotelInfoScreen } from "./screens/HotelInfoScreen";
 import { LocationBasedScreen } from "./screens/LocationBasedScreen";
+import { TokyoLiveInfoScreen } from "./screens/TokyoLiveInfoScreen";
 
 export default function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
@@ -21,6 +22,7 @@ export default function App() {
   const [showFlightInfo, setShowFlightInfo] = useState(false);
   const [showHotelInfo, setShowHotelInfo] = useState(false);
   const [showLocationBased, setShowLocationBased] = useState(false);
+  const [showLiveInfo, setShowLiveInfo] = useState(false);
 
   // Simulate onboarding completion check
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function App() {
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    setShowLiveInfo(false);
     // 탭 변경 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -50,6 +53,7 @@ export default function App() {
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    setShowLiveInfo(false);
     // AI 채팅 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -59,6 +63,7 @@ export default function App() {
     setShowAIChat(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    setShowLiveInfo(false);
     // 항공권 정보 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -68,6 +73,7 @@ export default function App() {
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowLocationBased(false);
+    setShowLiveInfo(false);
     // 호텔 정보 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -85,6 +91,7 @@ export default function App() {
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
+    setShowLiveInfo(false);
     // 위치 기반 추천 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -93,12 +100,27 @@ export default function App() {
     setShowLocationBased(false);
   };
 
+  const handleLiveInfoClick = () => {
+    setShowLiveInfo(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    // 실시간 정보 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLiveInfoBack = () => {
+    setShowLiveInfo(false);
+  };
+
   const handleHomeClick = () => {
     setActiveTab("home");
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
     setShowLocationBased(false);
+    setShowLiveInfo(false);
     // 홈 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -111,6 +133,7 @@ export default function App() {
       setShowFlightInfo(false);
       setShowHotelInfo(false);
       setShowLocationBased(false);
+      setShowLiveInfo(false);
       // 탭으로 이동 시 최상단으로 스크롤
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -132,6 +155,7 @@ export default function App() {
           onHotelInfoClick={handleHotelInfoClick}
           onHomeClick={handleHomeClick}
           onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
         />
       </div>
     );
@@ -147,6 +171,7 @@ export default function App() {
           onHotelInfoClick={handleHotelInfoClick}
           onHomeClick={handleHomeClick}
           onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
         />
       </div>
     );
@@ -162,6 +187,7 @@ export default function App() {
           onHotelInfoClick={handleHotelInfoClick}
           onHomeClick={handleHomeClick}
           onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
         />
       </div>
     );
@@ -177,6 +203,23 @@ export default function App() {
           onHotelInfoClick={handleHotelInfoClick}
           onHomeClick={handleHomeClick}
           onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+        />
+      </div>
+    );
+  }
+
+  // Show Tokyo Live Info
+  if (showLiveInfo) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <TokyoLiveInfoScreen onBack={handleLiveInfoBack} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
         />
       </div>
     );
@@ -213,6 +256,7 @@ export default function App() {
         onHotelInfoClick={handleHotelInfoClick}
         onHomeClick={handleHomeClick}
         onAIChatClick={handleFABClick}
+        onLiveInfoClick={handleLiveInfoClick}
       />
     </div>
   );
