@@ -2,12 +2,35 @@ import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { Card } from "../components/ui/card";
 import { placesByType } from "../data/tokyoLocations";
+import { useState, useEffect } from "react";
+import { getTokyoWeather, getWeatherRecommendation, WeatherData } from "../services/weatherService";
 
 interface HomeScreenProps {
   onNavigateToTab?: (tabIndex: number) => void;
 }
 
 export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
+  // 날씨 상태 관리
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(true);
+
+  // 날씨 정보 가져오기
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        setWeatherLoading(true);
+        const weatherData = await getTokyoWeather();
+        setWeather(weatherData);
+      } catch (error) {
+        console.error('날씨 정보 로드 실패:', error);
+      } finally {
+        setWeatherLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
   // 각 카테고리에서 랜덤으로 3개씩 선택하는 함수
   const getRandomPlaces = (places: any[], count: number) => {
     const shuffled = [...places].sort(() => 0.5 - Math.random());
@@ -117,9 +140,27 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
           <Card className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
             <div className="text-center space-y-2">
               <h2 className="font-semibold text-blue-900">오늘의 날씨</h2>
-              <div className="text-3xl">☀️</div>
-              <p className="text-blue-700">맑음, 22°C</p>
-              <p className="text-sm text-blue-600">외출하기 좋은 날씨입니다!</p>
+              {weatherLoading ? (
+                <div className="space-y-2">
+                  <div className="text-3xl">⏳</div>
+                  <p className="text-blue-700">날씨 정보를 불러오는 중...</p>
+                </div>
+              ) : weather ? (
+                <>
+                  <div className="text-3xl">{weather.icon}</div>
+                  <p className="text-blue-700">{weather.condition}, {weather.temperature}°C</p>
+                  <p className="text-sm text-blue-600">{getWeatherRecommendation(weather)}</p>
+                  <div className="flex justify-center gap-4 text-xs text-blue-500 mt-2">
+                    <span>💧 습도 {weather.humidity}%</span>
+                    <span>💨 풍속 {weather.windSpeed}m/s</span>
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-2">
+                  <div className="text-3xl">❓</div>
+                  <p className="text-blue-700">날씨 정보를 가져올 수 없습니다</p>
+                </div>
+              )}
             </div>
           </Card>
         </div>
