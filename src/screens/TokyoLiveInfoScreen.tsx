@@ -414,9 +414,9 @@ export function TokyoLiveInfoScreen({ onBack }: TokyoLiveInfoScreenProps) {
                 </p>
               </div>
               <div className="text-center p-2 bg-white/50 rounded">
-                <p className="text-muted-foreground">환율 (원/엔)</p>
+                <p className="text-muted-foreground">환율</p>
                 <p className="font-bold text-sm">
-                  {exchangeRates ? (1 / exchangeRates.rates.KRW).toFixed(3) : '--'}
+                  {exchangeRates ? (100 * exchangeRates.rates.KRW).toFixed(0) + '원' : '--'}
                 </p>
               </div>
             </div>
