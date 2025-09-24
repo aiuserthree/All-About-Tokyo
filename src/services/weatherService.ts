@@ -54,10 +54,9 @@ const getWeatherCondition = (weatherCode: number): { condition: string; descript
 // 도쿄 날씨 정보 가져오기
 export async function getTokyoWeather(): Promise<WeatherData> {
   try {
-    // Open-Meteo API 엔드포인트 (도쿄 좌표: 35.6762, 139.6503)
-    const response = await fetch(
-      'https://api.open-meteo.com/v1/forecast?latitude=35.6762&longitude=139.6503&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Asia%2FTokyo'
-    );
+    // Vercel API Route를 통한 프록시 (CORS 문제 해결)
+    const apiUrl = '/api/weather';
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
       throw new Error(`날씨 API 오류: ${response.status}`);
