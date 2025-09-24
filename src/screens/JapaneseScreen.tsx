@@ -45,20 +45,17 @@ export function JapaneseScreen({ onBack }: JapaneseScreenProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* 헤더 */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-        <div className="flex items-center justify-between p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onBack}
-            className="h-8 w-8"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <h1 className="text-lg font-semibold">생활 일본어</h1>
-          <div className="h-8 w-8" /> {/* 공간 확보 */}
-        </div>
+      {/* Header */}
+      <div className="bg-primary text-primary-foreground p-4 flex items-center gap-3">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onBack}
+          className="text-primary-foreground hover:bg-primary-foreground/20"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+        <h1 className="text-lg font-semibold">생활 일본어</h1>
       </div>
 
       <div className="p-4 space-y-4">
