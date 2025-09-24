@@ -405,7 +405,7 @@ export function TokyoLiveInfoScreen({ onBack }: TokyoLiveInfoScreenProps) {
               </div>
               <div className="text-center p-2 bg-white/50 rounded">
                 <p className="text-muted-foreground">공기질</p>
-                <p className="font-bold text-lg">{airQuality?.aqi}</p>
+                <p className="font-bold text-sm">{airQuality?.status || '--'}</p>
               </div>
               <div className="text-center p-2 bg-white/50 rounded">
                 <p className="text-muted-foreground">지진 안전</p>
