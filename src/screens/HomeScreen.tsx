@@ -180,6 +180,21 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreen
             </p>
           </div>
           
+          {/* YouTube Video Section */}
+          <Card className="overflow-hidden">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                id="youtube-video"
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/xY_heAX39qc?autoplay=0&mute=0&loop=1&playlist=xY_heAX39qc&controls=1&showinfo=1&rel=0&modestbranding=1&enablejsapi=1"
+                title="Tokyo Travel Guide Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </Card>
+          
           <Card className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
             <div className="text-center space-y-2">
               <h2 className="font-semibold text-blue-900">오늘의 날씨</h2>
