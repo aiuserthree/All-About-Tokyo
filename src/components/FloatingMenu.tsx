@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Plane, X, Home, MessageCircle, Hotel, Radio } from "lucide-react";
+import { Plus, Plane, X, Home, MessageCircle, Hotel, Radio, BookOpen } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
@@ -9,9 +9,10 @@ interface FloatingMenuProps {
   onHomeClick: () => void;
   onAIChatClick: () => void;
   onLiveInfoClick?: () => void;
+  onJapaneseClick: () => void;
 }
 
-export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick, onAIChatClick, onLiveInfoClick }: FloatingMenuProps) {
+export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick, onAIChatClick, onLiveInfoClick, onJapaneseClick }: FloatingMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -55,11 +56,11 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => handleMenuClick(onHomeClick)}
+                onClick={() => handleMenuClick(onJapaneseClick)}
                 className="w-full justify-start gap-3 text-sm font-medium"
               >
-                <Home className="w-4 h-4 text-green-600" />
-                홈으로
+                <BookOpen className="w-4 h-4 text-indigo-600" />
+                생활 일본어
               </Button>
               
               <Button
@@ -80,9 +81,19 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
                   className="w-full justify-start gap-3 text-sm font-medium"
                 >
                   <Radio className="w-4 h-4 text-red-600" />
-                  실시간 정보
+                  정보 대시보드
                 </Button>
               )}
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleMenuClick(onHomeClick)}
+                className="w-full justify-start gap-3 text-sm font-medium"
+              >
+                <Home className="w-4 h-4 text-green-600" />
+                홈으로
+              </Button>
               
             </CardContent>
           </Card>

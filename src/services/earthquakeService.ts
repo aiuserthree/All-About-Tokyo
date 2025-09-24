@@ -44,62 +44,106 @@ const getEarthquakeStatus = (intensity: number): { status: EarthquakeAlert['stat
 // 도쿄 지진 정보 가져오기
 export async function getTokyoEarthquakeInfo(): Promise<EarthquakeAlert> {
   try {
-    // 실제 환경에서는 일본 기상청 API 사용
-    // 현재는 모의 데이터 사용
+    // USGS 지진 API 사용 (무료, API 키 불필요)
+    // 일본 지역 (위도 30-45, 경도 130-145)에서 최근 1시간 내 지진 발생 여부 확인
+    const apiUrl = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + 
+      new Date(Date.now() - 3600000).toISOString() + 
+      '&endtime=' + new Date().toISOString() + 
+      '&minlatitude=30&maxlatitude=45&minlongitude=130&maxlongitude=145&minmagnitude=2.0';
     
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // 70% 확률로 안전 상태, 30% 확률로 지진 발생
-        const hasEarthquake = Math.random() < 0.3;
-        
-        if (hasEarthquake) {
-          // 지진 발생 시뮬레이션
-          const intensity = Math.random() < 0.8 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 4) + 4; // 대부분 약진, 가끔 강진
-          const magnitude = 3.0 + (intensity - 1) * 0.8 + Math.random() * 0.5;
-          
-          const earthquake: EarthquakeData = {
-            magnitude: Math.round(magnitude * 10) / 10,
-            location: getRandomLocation(),
-            depth: Math.floor(Math.random() * 50) + 10, // 10-60km
-            time: new Date(Date.now() - Math.random() * 3600000).toISOString(), // 최근 1시간 내
-            intensity,
-            tsunamiWarning: intensity >= 6 && Math.random() < 0.3,
-            status: getEarthquakeStatus(intensity).status
-          };
-          
-          resolve({
-            hasRecentEarthquake: true,
-            lastEarthquake: earthquake,
-            safetyMessage: getSafetyMessage(earthquake),
-            recommendations: getRecommendations(earthquake)
-          });
-        } else {
-          // 안전 상태
-          resolve({
-            hasRecentEarthquake: false,
-            safetyMessage: "현재 도쿄 지역에 지진 활동이 없습니다. 안전합니다.",
-            recommendations: [
-              "평상시 지진 대비 물품을 준비해 두세요.",
-              "건물 내부에서는 테이블 아래로 피하세요.",
-              "실외에서는 건물과 전선에서 멀어지세요."
-            ]
-          });
-        }
-      }, 600);
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
     });
+
+    if (!response.ok) {
+      throw new Error(`지진 API 오류: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('지진 API 응답:', data);
+    
+    // 최근 지진이 있는지 확인
+    const recentEarthquakes = data.features || [];
+    
+    if (recentEarthquakes.length > 0) {
+      // 가장 최근 지진 정보 사용
+      const latestEarthquake = recentEarthquakes[0];
+      const properties = latestEarthquake.properties;
+      const geometry = latestEarthquake.geometry;
+      
+      // 지진 강도를 규모로 추정 (대략적인 변환)
+      const magnitude = properties.mag;
+      const intensity = magnitude < 3 ? 1 : magnitude < 4 ? 2 : magnitude < 5 ? 3 : magnitude < 6 ? 4 : magnitude < 7 ? 5 : 6;
+      
+      const earthquake: EarthquakeData = {
+        magnitude: Math.round(magnitude * 10) / 10,
+        location: `${properties.place || '일본 근해'}`,
+        depth: Math.round(geometry.coordinates[2] || 0), // 깊이 (km)
+        time: new Date(properties.time).toISOString(),
+        intensity,
+        tsunamiWarning: properties.tsunami === 1,
+        status: getEarthquakeStatus(intensity).status
+      };
+      
+      return {
+        hasRecentEarthquake: true,
+        lastEarthquake: earthquake,
+        safetyMessage: getSafetyMessage(earthquake),
+        recommendations: getRecommendations(earthquake)
+      };
+    } else {
+      // 최근 지진 없음
+      return {
+        hasRecentEarthquake: false,
+        safetyMessage: "현재 도쿄 지역에 지진 활동이 없습니다. 안전합니다.",
+        recommendations: [
+          "평상시 지진 대비 물품을 준비해 두세요.",
+          "건물 내부에서는 테이블 아래로 피하세요.",
+          "실외에서는 건물과 전선에서 멀어지세요."
+        ]
+      };
+    }
   } catch (error) {
     console.error('지진 정보 가져오기 실패:', error);
+    console.log('모의 지진 데이터를 사용합니다.');
     
-    // 오류 시 안전 상태 반환
-    return {
-      hasRecentEarthquake: false,
-      safetyMessage: "지진 정보를 불러올 수 없습니다. 안전을 위해 주의하세요.",
-      recommendations: [
-        "지진 발생 시 침착하게 행동하세요.",
-        "건물 밖으로 나갈 때는 계단을 이용하세요.",
-        "긴급상황 시 119번에 신고하세요."
-      ]
-    };
+    // 오류 시 모의 데이터 반환
+    const hasEarthquake = Math.random() < 0.1; // 10% 확률로 지진 발생
+    
+    if (hasEarthquake) {
+      const intensity = Math.floor(Math.random() * 3) + 1;
+      const magnitude = 3.0 + Math.random() * 2;
+      
+      const earthquake: EarthquakeData = {
+        magnitude: Math.round(magnitude * 10) / 10,
+        location: getRandomLocation(),
+        depth: Math.floor(Math.random() * 30) + 10,
+        time: new Date(Date.now() - Math.random() * 3600000).toISOString(),
+        intensity,
+        tsunamiWarning: false,
+        status: getEarthquakeStatus(intensity).status
+      };
+      
+      return {
+        hasRecentEarthquake: true,
+        lastEarthquake: earthquake,
+        safetyMessage: getSafetyMessage(earthquake),
+        recommendations: getRecommendations(earthquake)
+      };
+    } else {
+      return {
+        hasRecentEarthquake: false,
+        safetyMessage: "지진 정보를 불러올 수 없습니다. 안전을 위해 주의하세요.",
+        recommendations: [
+          "지진 발생 시 침착하게 행동하세요.",
+          "건물 밖으로 나갈 때는 계단을 이용하세요.",
+          "긴급상황 시 119번에 신고하세요."
+        ]
+      };
+    }
   }
 }
 

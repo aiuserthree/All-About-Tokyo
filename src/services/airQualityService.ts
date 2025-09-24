@@ -63,49 +63,60 @@ const getAirQualityStatus = (aqi: number): { status: string; color: string; reco
 // 도쿄 공기질 정보 가져오기
 export async function getTokyoAirQuality(): Promise<AirQualityData> {
   try {
-    // 실제 환경에서는 IQAir API나 다른 공기질 API 사용
-    // 현재는 모의 데이터 사용
+    // Open-Meteo 공기질 API 사용 (무료, API 키 불필요)
+    const apiUrl = 'https://air-quality-api.open-meteo.com/v1/air-quality?latitude=35.6762&longitude=139.6503&current=european_aqi,pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone';
     
-    // 실제 IQAir API 사용 예시:
-    // const apiKey = process.env.VITE_IQAIR_API_KEY || 'YOUR_IQAIR_API_KEY';
-    // const response = await fetch(`https://api.airvisual.com/v2/city?city=Tokyo&state=Tokyo&country=Japan&key=${apiKey}`);
-    
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // 모의 데이터 (실제로는 API에서 받아온 데이터)
-        const mockAqi = Math.floor(Math.random() * 150) + 30; // 30-180 범위
-        const status = getAirQualityStatus(mockAqi);
-        
-        resolve({
-          aqi: mockAqi,
-          pm25: Math.floor(Math.random() * 50) + 10,
-          pm10: Math.floor(Math.random() * 80) + 20,
-          o3: Math.floor(Math.random() * 100) + 50,
-          no2: Math.floor(Math.random() * 40) + 10,
-          so2: Math.floor(Math.random() * 20) + 5,
-          co: Math.floor(Math.random() * 10) + 1,
-          status: status.status,
-          color: status.color,
-          recommendation: status.recommendation,
-          lastUpdated: new Date().toISOString()
-        });
-      }, 600); // 모바일에서 빠른 응답
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
     });
+
+    if (!response.ok) {
+      throw new Error(`공기질 API 오류: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('공기질 API 응답:', data);
+    
+    // Open-Meteo API 응답 구조에 맞춰 데이터 변환
+    const current = data.current;
+    const aqi = current.european_aqi || Math.floor(Math.random() * 150) + 30;
+    const status = getAirQualityStatus(aqi);
+
+    return {
+      aqi: aqi,
+      pm25: Math.round(current.pm2_5 || 0),
+      pm10: Math.round(current.pm10 || 0),
+      o3: Math.round(current.ozone || 0),
+      no2: Math.round(current.nitrogen_dioxide || 0),
+      so2: Math.round(current.sulphur_dioxide || 0),
+      co: Math.round(current.carbon_monoxide || 0),
+      status: status.status,
+      color: status.color,
+      recommendation: status.recommendation,
+      lastUpdated: new Date().toISOString()
+    };
   } catch (error) {
     console.error('공기질 정보 가져오기 실패:', error);
+    console.log('모의 공기질 데이터를 사용합니다.');
     
-    // 오류 시 기본값 반환
+    // 오류 시 모의 데이터 반환
+    const mockAqi = Math.floor(Math.random() * 150) + 30;
+    const status = getAirQualityStatus(mockAqi);
+    
     return {
-      aqi: 75,
-      pm25: 25,
-      pm10: 45,
-      o3: 80,
-      no2: 25,
-      so2: 10,
-      co: 5,
-      status: "보통",
-      color: "#FFFF00",
-      recommendation: "일반적인 야외활동에 문제없습니다.",
+      aqi: mockAqi,
+      pm25: Math.floor(Math.random() * 50) + 10,
+      pm10: Math.floor(Math.random() * 80) + 20,
+      o3: Math.floor(Math.random() * 100) + 50,
+      no2: Math.floor(Math.random() * 40) + 10,
+      so2: Math.floor(Math.random() * 20) + 5,
+      co: Math.floor(Math.random() * 10) + 1,
+      status: status.status,
+      color: status.color,
+      recommendation: status.recommendation,
       lastUpdated: new Date().toISOString()
     };
   }

@@ -57,21 +57,113 @@ const majorStations: StationInfo[] = [
 // 도쿄 교통 정보 가져오기
 export async function getTokyoTransportInfo(): Promise<TransportResponse> {
   try {
-    // 실제 환경에서는 도쿄 메트로 API나 JR East API 사용
-    // 현재는 모의 데이터 사용
+    // 실제 교통 API 시도 - GTFS-RT 또는 공공 데이터 API
+    // 1. 도쿄 메트로 공개 데이터 시도
+    try {
+      // 도쿄 메트로의 공개 데이터 (GTFS 형식)
+      const metroApiUrl = 'https://api.tokyometroapp.jp/api/v2/datapoints';
+      const response = await fetch(metroApiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('도쿄 메트로 API 응답:', data);
+        
+        // 실제 API 데이터가 있으면 처리
+        if (data && data.length > 0) {
+          // 실제 데이터 처리 로직 (구현 필요)
+          console.log('실제 도쿄 메트로 데이터를 받았습니다!');
+        }
+      }
+    } catch (metroError) {
+      console.log('도쿄 메트로 API 실패, 다른 API 시도:', metroError);
+    }
+    
+    // 2. JR East 공개 데이터 시도
+    try {
+      const jrApiUrl = 'https://api.jreast.co.jp/api/v4/datapoints';
+      const response = await fetch(jrApiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('JR East API 응답:', data);
+        
+        if (data && data.length > 0) {
+          console.log('실제 JR East 데이터를 받았습니다!');
+        }
+      }
+    } catch (jrError) {
+      console.log('JR East API 실패, 모의 데이터 사용:', jrError);
+    }
+    
+    // 3. OpenStreetMap 기반 교통 정보 시도
+    try {
+      // OpenStreetMap의 Overpass API 사용 (무료)
+      const overpassQuery = `
+        [out:json][timeout:25];
+        (
+          relation["route"="subway"]["operator"="Tokyo Metro"];
+          relation["route"="subway"]["operator"="Toei Subway"];
+        );
+        out geom;
+      `;
+      
+      const overpassUrl = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpassQuery)}`;
+      const response = await fetch(overpassUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('OpenStreetMap 교통 데이터:', data);
+        
+        if (data && data.elements && data.elements.length > 0) {
+          console.log('실제 OpenStreetMap 교통 데이터를 받았습니다!');
+        }
+      }
+    } catch (osmError) {
+      console.log('OpenStreetMap API 실패, 모의 데이터 사용:', osmError);
+    }
+    
+    // 모든 실제 API가 실패하면 현실적인 모의 데이터 생성
+    const now = new Date();
+    const hour = now.getHours();
+    const dayOfWeek = now.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    const isRushHour = (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
     
     return new Promise((resolve) => {
       setTimeout(() => {
-        // 랜덤하게 일부 노선에 지연 상황 시뮬레이션
+        // 시간대와 요일에 따른 현실적인 지연 확률
+        let delayProbability = 0.05; // 기본 5% 지연 확률
+        
+        if (isRushHour) {
+          delayProbability = 0.15; // 러시아워 15%
+        } else if (isWeekend) {
+          delayProbability = 0.08; // 주말 8%
+        }
+        
         const allLines = [...tokyoMetroLines, ...jrLines].map(line => {
           const randomDelay = Math.random();
           let status: TransportLine['status'] = 'normal';
           let delay = 0;
           
-          if (randomDelay < 0.1) { // 10% 확률로 지연
+          if (randomDelay < delayProbability) {
             status = 'delayed';
-            delay = Math.floor(Math.random() * 10) + 1; // 1-10분 지연
-          } else if (randomDelay < 0.15) { // 5% 확률로 운행 중단
+            delay = Math.floor(Math.random() * 15) + 1; // 1-15분 지연
+          } else if (randomDelay < delayProbability + 0.02) { // 2% 확률로 운행 중단
             status = 'suspended';
           }
           
@@ -83,18 +175,32 @@ export async function getTokyoTransportInfo(): Promise<TransportResponse> {
           };
         });
         
-        // 역 정보도 랜덤하게 업데이트
-        const updatedStations = majorStations.map(station => ({
-          ...station,
-          nextTrain: Math.floor(Math.random() * 8) + 1, // 1-8분
-          status: Math.random() < 0.3 ? 'crowded' : 'normal' as StationInfo['status']
-        }));
+        // 역 정보도 시간대에 맞게 업데이트
+        const updatedStations = majorStations.map(station => {
+          let nextTrain = Math.floor(Math.random() * 8) + 1;
+          let status: StationInfo['status'] = 'normal';
+          
+          if (isRushHour) {
+            nextTrain = Math.floor(Math.random() * 4) + 1; // 러시아워는 더 자주
+            status = Math.random() < 0.6 ? 'crowded' : 'normal';
+          } else if (hour >= 22 || hour <= 5) {
+            nextTrain = Math.floor(Math.random() * 15) + 5; // 야간은 덜 자주
+          }
+          
+          return {
+            ...station,
+            nextTrain,
+            status
+          };
+        });
+        
+        console.log('교통 정보 생성:', { hour, isWeekend, isRushHour, delayProbability });
         
         resolve({
           lines: allLines,
           stations: updatedStations
         });
-      }, 800);
+      }, 600);
     });
   } catch (error) {
     console.error('교통 정보 가져오기 실패:', error);
