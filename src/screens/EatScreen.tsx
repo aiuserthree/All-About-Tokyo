@@ -19,7 +19,7 @@ export function EatScreen() {
   const getRestaurantsByLocation = () => {
     const locationPlaces = placesByLocation[selectedLocation] || [];
     return locationPlaces.filter(place => 
-      ['라멘 전문점', '일식', '햄버거', '스시 전문점', '돈카츠', '우동', '소바', '야키니쿠', '이자카야', '양식', '이탈리안', '야키토리', '라멘', '스시'].includes(place.category)
+      ['라멘 전문점', '일식', '햄버거', '스시 전문점', '돈카츠', '우동', '소바', '야키니쿠', '이자카야', '양식', '이탈리안', '야키토리', '라멘', '스시', '함바그 전문점', '우동 전문점', '카이센동 전문점', '카이센동'].includes(place.category)
     );
   };
 
@@ -44,8 +44,8 @@ export function EatScreen() {
   });
 
   const handleCardClick = (restaurant: any) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${restaurant.lat},${restaurant.lng}`;
-    window.open(url, '_blank');
+    // PlaceCard에서 이미 맵 링크를 처리하므로 여기서는 추가 동작이 필요하면 구현
+    console.log('맛집 선택됨:', restaurant.title);
   };
 
   return (
@@ -123,6 +123,8 @@ export function EatScreen() {
                 lat={restaurant.lat}
                 lng={restaurant.lng}
                 address={restaurant.address}
+                mapUrl={restaurant.mapUrl}
+                referenceUrl={restaurant.referenceUrl}
                 onClick={() => handleCardClick(restaurant)}
               />
             ))

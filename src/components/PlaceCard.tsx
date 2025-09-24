@@ -1,6 +1,7 @@
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { MapPin, Clock, DollarSign } from "lucide-react";
+import { Button } from "./ui/button";
+import { MapPin, Clock, DollarSign, ExternalLink } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface PlaceCardProps {
@@ -15,6 +16,8 @@ interface PlaceCardProps {
   lat?: number;
   lng?: number;
   address?: string;
+  mapUrl?: string;
+  referenceUrl?: string;
   onClick?: () => void;
 }
 
@@ -30,6 +33,8 @@ export function PlaceCard({
   lat,
   lng,
   address,
+  mapUrl,
+  referenceUrl,
   onClick
 }: PlaceCardProps) {
   return (
@@ -98,6 +103,38 @@ export function PlaceCard({
             ))}
           </div>
         )}
+        
+        {/* 링크 버튼들 */}
+        <div className="flex gap-2 pt-2">
+          {mapUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex-1 text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(mapUrl, '_blank', 'noopener,noreferrer');
+              }}
+            >
+              <MapPin className="w-3 h-3 mr-1" />
+              지도보기
+            </Button>
+          )}
+          {referenceUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex-1 text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(referenceUrl, '_blank', 'noopener,noreferrer');
+              }}
+            >
+              <ExternalLink className="w-3 h-3 mr-1" />
+              자세히보기
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );

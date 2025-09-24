@@ -17,9 +17,11 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
     setIsOpen(!isOpen);
   };
 
-  const handleMenuClick = (callback: () => void) => {
-    callback();
-    setIsOpen(false);
+  const handleMenuClick = (callback: (() => void) | undefined) => {
+    if (callback && typeof callback === 'function') {
+      callback();
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -68,6 +70,7 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
                 <MessageCircle className="w-4 h-4 text-purple-600" />
                 AI 채팅
               </Button>
+              
             </CardContent>
           </Card>
         </div>

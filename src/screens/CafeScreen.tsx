@@ -19,7 +19,7 @@ export function CafeScreen() {
   const getCafesByLocation = () => {
     const locationPlaces = placesByLocation[selectedLocation] || [];
     return locationPlaces.filter(place => 
-      ['카페', '바', '테마카페'].includes(place.category)
+      ['카페', '디저트', '브런치', '테마카페', '바'].includes(place.category)
     );
   };
 
@@ -44,15 +44,15 @@ export function CafeScreen() {
   });
 
   const handleCardClick = (cafe: any) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${cafe.lat},${cafe.lng}`;
-    window.open(url, '_blank');
+    // PlaceCard에서 이미 맵 링크를 처리하므로 여기서는 추가 동작이 필요하면 구현
+    console.log('카페 선택됨:', cafe.title);
   };
 
   const cafeTypes = [
     {
       icon: <Coffee className="w-5 h-5" />,
       title: "일반 카페",
-      count: cafes.filter(c => c.category === '카페').length,
+      count: cafes.filter(c => ['카페', '디저트', '브런치'].includes(c.category)).length,
       description: "커피와 간단한 디저트"
     },
     {
@@ -96,7 +96,7 @@ export function CafeScreen() {
           selectedLocation={selectedLocation}
           onLocationChange={setSelectedLocation}
           placesByLocation={placesByLocation}
-          categoryFilter={(place) => ['카페', '바', '테마카페'].includes(place.category)}
+          categoryFilter={(place) => ['카페', '디저트', '브런치', '테마카페', '바'].includes(place.category)}
         />
 
         {/* Cafe Types */}
@@ -156,6 +156,8 @@ export function CafeScreen() {
                   lat={cafe.lat}
                   lng={cafe.lng}
                   address={cafe.address}
+                  mapUrl={cafe.mapUrl}
+                  referenceUrl={cafe.referenceUrl}
                   onClick={() => handleCardClick(cafe)}
                 />
               ))}

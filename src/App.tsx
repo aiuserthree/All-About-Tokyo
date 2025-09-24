@@ -12,6 +12,7 @@ import { EssentialsScreen } from "./screens/EssentialsScreen";
 import { AIChatScreen } from "./screens/AIChatScreen";
 import { FlightInfoScreen } from "./screens/FlightInfoScreen";
 import { HotelInfoScreen } from "./screens/HotelInfoScreen";
+import { LocationBasedScreen } from "./screens/LocationBasedScreen";
 
 export default function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
@@ -19,6 +20,7 @@ export default function App() {
   const [showAIChat, setShowAIChat] = useState(false);
   const [showFlightInfo, setShowFlightInfo] = useState(false);
   const [showHotelInfo, setShowHotelInfo] = useState(false);
+  const [showLocationBased, setShowLocationBased] = useState(false);
 
   // Simulate onboarding completion check
   useEffect(() => {
@@ -38,24 +40,28 @@ export default function App() {
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
+    setShowLocationBased(false);
   };
 
   const handleFABClick = () => {
     setShowAIChat(true);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
+    setShowLocationBased(false);
   };
 
   const handleFlightInfoClick = () => {
     setShowFlightInfo(true);
     setShowAIChat(false);
     setShowHotelInfo(false);
+    setShowLocationBased(false);
   };
 
   const handleHotelInfoClick = () => {
     setShowHotelInfo(true);
     setShowAIChat(false);
     setShowFlightInfo(false);
+    setShowLocationBased(false);
   };
 
   const handleFlightInfoBack = () => {
@@ -66,11 +72,23 @@ export default function App() {
     setShowHotelInfo(false);
   };
 
+  const handleLocationBasedClick = () => {
+    setShowLocationBased(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+  };
+
+  const handleLocationBasedBack = () => {
+    setShowLocationBased(false);
+  };
+
   const handleHomeClick = () => {
     setActiveTab("home");
     setShowAIChat(false);
     setShowFlightInfo(false);
     setShowHotelInfo(false);
+    setShowLocationBased(false);
   };
 
   const handleNavigateToTab = (tabIndex: number) => {
@@ -80,6 +98,7 @@ export default function App() {
       setShowAIChat(false);
       setShowFlightInfo(false);
       setShowHotelInfo(false);
+      setShowLocationBased(false);
     }
   };
 
@@ -134,11 +153,26 @@ export default function App() {
     );
   }
 
+  // Show Location Based Screen
+  if (showLocationBased) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <LocationBasedScreen onBack={handleLocationBasedBack} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+        />
+      </div>
+    );
+  }
+
   // Main app content
   const renderScreen = () => {
     switch (activeTab) {
       case "home":
-        return <HomeScreen onNavigateToTab={handleNavigateToTab} />;
+        return <HomeScreen onNavigateToTab={handleNavigateToTab} onLocationBasedClick={handleLocationBasedClick} />;
       case "eat":
         return <EatScreen />;
       case "see":

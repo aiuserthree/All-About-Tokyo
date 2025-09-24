@@ -19,7 +19,7 @@ export function DessertScreen() {
   const getDessertsByLocation = () => {
     const locationPlaces = placesByLocation[selectedLocation] || [];
     return locationPlaces.filter(place => 
-      ['디저트'].includes(place.category)
+      ['디저트', '카페', '브런치', '테마카페', '바'].includes(place.category)
     );
   };
 
@@ -44,8 +44,8 @@ export function DessertScreen() {
   });
 
   const handleCardClick = (dessert: any) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${dessert.lat},${dessert.lng}`;
-    window.open(url, '_blank');
+    // PlaceCard에서 이미 맵 링크를 처리하므로 여기서는 추가 동작이 필요하면 구현
+    console.log('디저트 선택됨:', dessert.title);
   };
 
   const popularDesserts = [
@@ -204,6 +204,8 @@ export function DessertScreen() {
                   lat={dessert.lat}
                   lng={dessert.lng}
                   address={dessert.address}
+                  mapUrl={dessert.mapUrl}
+                  referenceUrl={dessert.referenceUrl}
                   onClick={() => handleCardClick(dessert)}
                 />
               ))}

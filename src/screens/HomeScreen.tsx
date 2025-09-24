@@ -1,15 +1,21 @@
 import { AppBar } from "../components/AppBar";
 import { PlaceCard } from "../components/PlaceCard";
 import { Card } from "../components/ui/card";
+import { Button } from "../components/ui/button";
 import { placesByType } from "../data/tokyoLocations";
 import { useState, useEffect } from "react";
 import { getTokyoWeather, getWeatherRecommendation, WeatherData } from "../services/weatherService";
+import { MapPin } from "lucide-react";
 
 interface HomeScreenProps {
   onNavigateToTab?: (tabIndex: number) => void;
+  onLocationBasedClick?: () => void;
 }
 
-export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
+export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreenProps) {
+  // 디버깅용 콘솔 로그
+  console.log('HomeScreen props:', { onNavigateToTab, onLocationBasedClick });
+  
   // 날씨 상태 관리
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
@@ -53,10 +59,19 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
     cafe: placesByType.cafe.length
   });
 
-  const handleCardClick = (place: any) => {
-    // 구글 맵으로 이동
-    const url = `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`;
-    window.open(url, '_blank');
+  const handleMapClick = (place: any) => {
+    if (place.mapUrl) {
+      window.open(place.mapUrl, '_blank');
+    } else {
+      const url = `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`;
+      window.open(url, '_blank');
+    }
+  };
+
+  const handleReferenceClick = (place: any) => {
+    if (place.referenceUrl) {
+      window.open(place.referenceUrl, '_blank');
+    }
   };
 
   const renderCategorySection = (title: string, places: any[], icon: string) => (
@@ -72,8 +87,7 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
         {places.map((place, index) => (
           <Card 
             key={`${title}-${index}`}
-            className="overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
-            onClick={() => handleCardClick(place)}
+            className="overflow-hidden transition-transform hover:scale-[1.02]"
           >
             <div className="relative h-28 bg-muted">
               <img
@@ -116,6 +130,30 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
                   </span>
                 ))}
               </div>
+
+              {/* 버튼 영역 */}
+              <div className="flex gap-2 pt-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMapClick(place);
+                  }}
+                  className="flex-1 bg-primary text-primary-foreground text-xs py-2 px-3 rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  🗺️ 지도보기
+                </button>
+                {place.referenceUrl && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReferenceClick(place);
+                    }}
+                    className="flex-1 bg-secondary text-secondary-foreground text-xs py-2 px-3 rounded-md hover:bg-secondary/90 transition-colors"
+                  >
+                    📖 자세히보기
+                  </button>
+                )}
+              </div>
             </div>
           </Card>
         ))}
@@ -127,7 +165,7 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
     <div className="min-h-screen bg-background">
       <AppBar />
       
-      <div className="pb-24 space-y-6">
+      <div className="pb-24 space-y-4">
         {/* Welcome Section */}
         <div className="p-4 space-y-4">
           <div className="text-center space-y-2">
@@ -163,11 +201,39 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
               )}
             </div>
           </Card>
+          
+          {/* 위치 기반 추천 버튼 */}
+          <Card className="p-4 bg-gradient-to-r from-red-50 to-pink-50 border-red-200" style={{ border: '2px solid red' }}>
+            <div className="text-center space-y-3">
+              <div className="text-xl">📍</div>
+              <Button
+                onClick={onLocationBasedClick || (() => console.log('onLocationBasedClick not provided'))}
+                className="gap-2 w-full"
+                size="sm"
+                style={{ 
+                  backgroundColor: '#dc2626 !important',
+                  color: 'white !important',
+                  border: '2px solid #dc2626 !important',
+                  minHeight: '40px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: '1',
+                  visibility: 'visible'
+                }}
+              >
+                <MapPin className="w-4 h-4" style={{ color: 'white' }} />
+                위치 기반 추천
+              </Button>
+            </div>
+          </Card>
         </div>
 
         {/* Quick Stats */}
         <div className="px-4">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <Card 
               className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
               onClick={() => onNavigateToTab?.(1)}
@@ -192,31 +258,19 @@ export function HomeScreen({ onNavigateToTab }: HomeScreenProps) {
               <div className="text-sm font-medium">쇼핑</div>
               <div className="text-xs text-muted-foreground">{placesByType.shopping.length}곳</div>
             </Card>
-          </div>
-          
-          {/* Additional Quick Actions */}
-          <div className="grid grid-cols-2 gap-4 mt-4">
             <Card 
               className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
               onClick={() => onNavigateToTab?.(4)}
             >
               <div className="text-2xl mb-1">☕</div>
-              <div className="text-sm font-medium">카페</div>
+              <div className="text-sm font-medium">카페 & 디저트</div>
               <div className="text-xs text-muted-foreground">{placesByType.cafe.length}곳</div>
-            </Card>
-            <Card 
-              className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
-              onClick={() => onNavigateToTab?.(5)}
-            >
-              <div className="text-2xl mb-1">🍰</div>
-              <div className="text-sm font-medium">디저트</div>
-              <div className="text-xs text-muted-foreground">{placesByType.dessert?.length || 0}곳</div>
             </Card>
           </div>
         </div>
 
         {/* Category Recommendations */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="px-4">
             <h2 className="text-xl font-semibold">카테고리별 추천</h2>
             <p className="text-sm text-muted-foreground mt-1">각 카테고리에서 랜덤으로 선별된 추천 장소입니다</p>

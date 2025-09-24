@@ -19,7 +19,7 @@ export function SeeDoScreen() {
   const getAttractionsByLocation = () => {
     const locationPlaces = placesByLocation[selectedLocation] || [];
     return locationPlaces.filter(place => 
-      ['전망대', '랜드마크', '불교 사찰', '신사', '사찰', '정원', '동물원', '박물관', '공원', '미술관', '명소', '산책로', '교통'].includes(place.category)
+      ['랜드마크', '사찰', '전망대', '전시관', '공원', '산책로'].includes(place.category)
     );
   };
 
@@ -45,8 +45,8 @@ export function SeeDoScreen() {
   });
 
   const handleCardClick = (attraction: any) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${attraction.lat},${attraction.lng}`;
-    window.open(url, '_blank');
+    // PlaceCard에서 이미 맵 링크를 처리하므로 여기서는 추가 동작이 필요하면 구현
+    console.log('명소 선택됨:', attraction.title);
   };
 
   return (
@@ -133,6 +133,8 @@ export function SeeDoScreen() {
                 lat={attraction.lat}
                 lng={attraction.lng}
                 address={attraction.address}
+                mapUrl={attraction.mapUrl}
+                referenceUrl={attraction.referenceUrl}
                 onClick={() => handleCardClick(attraction)}
               />
             ))

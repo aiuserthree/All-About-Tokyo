@@ -16,7 +16,7 @@ export function ShopScreen() {
   const getShoppingByLocation = () => {
     const locationPlaces = placesByLocation[selectedLocation] || [];
     return locationPlaces.filter(place => 
-      ['백화점', '상점가', '패션·액세서리', '시장', '면세점', '쇼핑몰', '쇼핑', '서점'].includes(place.category)
+      ['쇼핑몰', '거리', '시장', '전문거리', '먹자골목', '편집샵', '서점'].includes(place.category)
     );
   };
 
@@ -50,8 +50,8 @@ export function ShopScreen() {
   ];
 
   const handleCardClick = (place: any) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`;
-    window.open(url, '_blank');
+    // PlaceCard에서 이미 맵 링크를 처리하므로 여기서는 추가 동작이 필요하면 구현
+    console.log('쇼핑 장소 선택됨:', place.title);
   };
 
   return (
@@ -159,6 +159,8 @@ export function ShopScreen() {
                   lat={area.lat}
                   lng={area.lng}
                   address={area.address}
+                  mapUrl={area.mapUrl}
+                  referenceUrl={area.referenceUrl}
                   onClick={() => handleCardClick(area)}
                 />
               ))
