@@ -623,7 +623,11 @@ export const allTokyoPlaces: Place[] = [
   ...shibuyaPlaces,
   ...ginzaPlaces,
   ...asakusaPlaces,
-  ...harajukuPlaces
+  ...harajukuPlaces,
+  ...uenoPlaces,
+  ...roppongiPlaces,
+  ...otherPlaces,
+  ...cafePlaces
 ];
 
 // 지역별 장소 데이터 매핑
@@ -634,9 +638,11 @@ export const placesByLocation: { [key: string]: Place[] } = {
   ginza: ginzaPlaces,
   asakusa: asakusaPlaces,
   harajuku: harajukuPlaces,
-  roppongi: [],
+  roppongi: roppongiPlaces,
+  ueno: uenoPlaces,
+  other: otherPlaces,
+  cafe: cafePlaces,
   akihabara: [],
-  ueno: [],
   tsukiji: [],
   "tokyo-station": [],
   skytree: []
@@ -645,10 +651,10 @@ export const placesByLocation: { [key: string]: Place[] } = {
 // 장소 타입별 분류
 export const placesByType: { [key: string]: Place[] } = {
   restaurant: allTokyoPlaces.filter(place => 
-    ['라멘 전문점', '일식', '햄버거', '스시 전문점', '돈카츠', '우동', '소바', '야키니쿠', '이자카야'].includes(place.category)
+    ['라멘 전문점', '일식', '햄버거', '스시 전문점', '돈카츠', '우동', '소바', '야키니쿠', '이자카야', '양식', '이탈리안', '야키토리', '라멘', '몬자야키', '로바타'].includes(place.category)
   ),
   attraction: allTokyoPlaces.filter(place => 
-    ['전망대', '랜드마크', '불교 사찰', '신사', '공원', '정원', '명소', '산책로', '사찰', '미술관', '박물관'].includes(place.category)
+    ['전망대', '랜드마크', '불교 사찰', '신사', '공원', '정원', '명소', '산책로', '사찰', '미술관', '박물관', '전시관'].includes(place.category)
   ),
   shopping: allTokyoPlaces.filter(place => 
     ['백화점', '상점가', '패션·액세서리', '쇼핑몰', '면세점', '쇼핑', '서점', '시장'].includes(place.category)
@@ -656,7 +662,10 @@ export const placesByType: { [key: string]: Place[] } = {
   cafe: allTokyoPlaces.filter(place => 
     ['카페', '바', '테마카페'].includes(place.category)
   ),
+  culture: allTokyoPlaces.filter(place => 
+    ['문화행사', '미술관', '박물관', '교통', '전시관'].includes(place.category)
+  ),
   dessert: allTokyoPlaces.filter(place => 
-    ['디저트'].includes(place.category)
+    ['디저트', '당고'].includes(place.category)
   )
 };
