@@ -1,4 +1,4 @@
-import { ArrowLeft, MapPin, Star, Wifi, Car, Utensils, Users, Clock, Phone } from "lucide-react";
+import { ArrowLeft, MapPin, Star, Wifi, Car, Utensils, Users, Clock, Phone, ExternalLink } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -8,6 +8,14 @@ interface HotelInfoScreenProps {
 }
 
 export function HotelInfoScreen({ onBack }: HotelInfoScreenProps) {
+  const hotelAddress = "Minato-ku, Roppongi 2-3-11, Tokyo, Japan";
+  
+  const openGoogleMaps = () => {
+    const encodedAddress = encodeURIComponent(hotelAddress);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+    window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
@@ -42,9 +50,16 @@ export function HotelInfoScreen({ onBack }: HotelInfoScreenProps) {
               <span className="text-sm font-medium">8.4점</span>
               <span className="text-sm text-muted-foreground">(커플 여행객 선호)</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Minato-ku, Roppongi 2-3-11
-            </p>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={openGoogleMaps}
+              className="p-0 h-auto text-sm text-muted-foreground hover:text-primary justify-start gap-2"
+            >
+              <MapPin className="w-4 h-4" />
+              <span>Minato-ku, Roppongi 2-3-11</span>
+              <ExternalLink className="w-3 h-3" />
+            </Button>
           </CardContent>
         </Card>
 
