@@ -3,75 +3,15 @@ import { PlaceCard } from "../components/PlaceCard";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, Calendar, MapPin, ExternalLink } from "lucide-react";
+import { eventPlaces } from "../data/tokyoLocations";
 
 interface EventsScreenProps {
   onBack?: () => void;
 }
 
 export function EventsScreen({ onBack }: EventsScreenProps) {
-  // 이벤트 & 페스티벌 데이터 (실제 데이터는 tokyoLocations에서 가져올 수 있도록 확장 필요)
-  const eventsData = [
-    {
-      id: "event-1",
-      title: "문 아트 나이트 시모키타자와",
-      category: "아트페스티벌",
-      description: "달빛을 테마로 한 아트페스티벌, 공연",
-      image: "/image/문 아트 나이트 시모키타자와.png",
-      distance: "0m",
-      price: "무료",
-      rating: 4.5,
-      openTime: "18:00-22:00",
-      tags: ["무료", "아트", "야간", "공연"],
-      lat: 35.6617,
-      lng: 139.6667,
-      address: "도쿄도 세타가야구 시모키타자와 2-12-1",
-      location: "shimokitazawa",
-      mapUrl: "https://maps.app.goo.gl/n1a9VSpSGs7DV6Jz7",
-      referenceUrl: "https://tokyocheapo.com/events/moon-art-night-shimokitazawa/",
-      eventDate: "2025년 3월",
-      eventType: "아트페스티벌"
-    },
-    {
-      id: "event-2", 
-      title: "롯폰기 아트 나이트 2025",
-      category: "아트페스티벌",
-      description: "미술관, 전시(낮) + 거리 설치미술, 퍼포먼스(밤)",
-      image: "/image/롯폰기 아트 나이트 2025.png",
-      distance: "0m",
-      price: "무료",
-      rating: 4.6,
-      openTime: "10:00-22:00",
-      tags: ["무료", "미술관", "전시", "퍼포먼스"],
-      lat: 35.6654,
-      lng: 139.7296,
-      address: "도쿄도 미나토구 롯폰기 6-10-1",
-      location: "roppongi",
-      mapUrl: "https://maps.app.goo.gl/jeFXGDorajDimhgH6",
-      referenceUrl: "https://www.gotokyo.org/kr/spot/ev236/index.html",
-      eventDate: "2025년 4월",
-      eventType: "아트페스티벌"
-    },
-    {
-      id: "event-3",
-      title: "도쿄 게임 쇼 2025",
-      category: "게임박람회",
-      description: "아시아 최대 게임 박람회",
-      image: "/image/도쿄 게임 쇼 2025.png",
-      distance: "0m",
-      price: "입장료 있음",
-      rating: 4.7,
-      openTime: "10:00-17:00",
-      tags: ["게임", "박람회", "체험", "전시"],
-      lat: 35.6762,
-      lng: 139.6503,
-      address: "도쿄도 지요다구 다이바 1-1-1",
-      location: "other",
-      mapUrl: "https://maps.app.goo.gl/ZcCGgdmVKDsgxt2TA",
-      referenceUrl: "https://www.waug.com/ko/activities/149074",
-      eventDate: "2025년 9월",
-      eventType: "게임박람회"
-    }
-  ];
+  // 이벤트 & 페스티벌 데이터를 tokyoLocations에서 가져오기
+  const eventsData = eventPlaces;
 
   const handleMapClick = (place: any) => {
     if (place.mapUrl) {
@@ -161,55 +101,23 @@ export function EventsScreen({ onBack }: EventsScreenProps) {
           
           <div className="px-4 space-y-3">
             {eventsData.map((event, index) => (
-              <Card key={`event-${index}`} className="p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-lg">{event.title}</h3>
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                        {event.eventType}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{event.description}</p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <span>📅 {event.eventDate}</span>
-                      <span>💰 {event.price}</span>
-                      <span>⭐ {event.rating}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {event.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="text-xs bg-muted px-2 py-1 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleMapClick(event)}
-                    className="flex-1"
-                  >
-                    <MapPin className="w-4 h-4 mr-1" />
-                    지도보기
-                  </Button>
-                  {event.referenceUrl && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleReferenceClick(event)}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                  )}
-                </div>
-              </Card>
+              <PlaceCard
+                key={`event-${index}`}
+                title={event.title}
+                category={event.category}
+                image={event.image}
+                price={event.price}
+                distance={event.distance}
+                openTime={event.openTime}
+                rating={event.rating}
+                tags={event.tags}
+                lat={event.lat}
+                lng={event.lng}
+                address={event.address}
+                mapUrl={event.mapUrl}
+                referenceUrl={event.referenceUrl}
+                onClick={() => handleMapClick(event)}
+              />
             ))}
           </div>
         </div>

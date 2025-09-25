@@ -1289,6 +1289,64 @@ export const photospotPlaces: Place[] = [
   }
 ];
 
+// 이벤트 & 페스티벌 데이터
+export const eventPlaces: Place[] = [
+  {
+    id: "event-1",
+    title: "문 아트 나이트 시모키타자와",
+    category: "이벤트&페스티벌",
+    description: "달빛을 테마로 한 아트페스티벌, 공연",
+    image: "/image/문 아트 나이트 시모키타자와.png",
+    distance: "0m",
+    price: "무료",
+    rating: 4.5,
+    openTime: "18:00-22:00",
+    tags: ["무료", "아트", "야간", "공연"],
+    lat: 35.6617,
+    lng: 139.6667,
+    address: "도쿄도 세타가야구 시모키타자와 2-12-1",
+    location: "shimokitazawa",
+    mapUrl: "https://maps.app.goo.gl/n1a9VSpSGs7DV6Jz7",
+    referenceUrl: "https://tokyocheapo.com/events/moon-art-night-shimokitazawa/"
+  },
+  {
+    id: "event-2", 
+    title: "롯폰기 아트 나이트 2025",
+    category: "이벤트&페스티벌",
+    description: "미술관, 전시(낮) + 거리 설치미술, 퍼포먼스(밤)",
+    image: "/image/롯폰기 아트 나이트 2025.png",
+    distance: "0m",
+    price: "무료",
+    rating: 4.6,
+    openTime: "10:00-22:00",
+    tags: ["무료", "미술관", "전시", "퍼포먼스"],
+    lat: 35.6654,
+    lng: 139.7296,
+    address: "도쿄도 미나토구 롯폰기 6-10-1",
+    location: "roppongi",
+    mapUrl: "https://maps.app.goo.gl/jeFXGDorajDimhgH6",
+    referenceUrl: "https://www.gotokyo.org/kr/spot/ev236/index.html"
+  },
+  {
+    id: "event-3",
+    title: "도쿄 게임 쇼 2025",
+    category: "이벤트&페스티벌",
+    description: "아시아 최대 게임 박람회",
+    image: "/image/도쿄 게임 쇼 2025.png",
+    distance: "0m",
+    price: "입장료 있음",
+    rating: 4.7,
+    openTime: "10:00-17:00",
+    tags: ["게임", "박람회", "체험", "전시"],
+    lat: 35.6762,
+    lng: 139.6503,
+    address: "도쿄도 지요다구 다이바 1-1-1",
+    location: "other",
+    mapUrl: "https://maps.app.goo.gl/ZcCGgdmVKDsgxt2TA",
+    referenceUrl: "https://www.waug.com/ko/activities/149074"
+  }
+];
+
 // 모든 장소 데이터 통합
 export const allTokyoPlaces: Place[] = [
   ...allRestaurantPlaces,
@@ -1298,7 +1356,8 @@ export const allTokyoPlaces: Place[] = [
   ...additionalAttractionPlaces,
   ...shoppingPlaces,
   ...parkPlaces,
-  ...photospotPlaces
+  ...photospotPlaces,
+  ...eventPlaces
 ];
 
 // 지역별 장소 데이터 매핑
@@ -1341,5 +1400,8 @@ export const placesByType: { [key: string]: Place[] } = {
   ),
   photospot: allTokyoPlaces.filter(place => 
     ['포토스팟'].includes(place.category)
+  ),
+  event: allTokyoPlaces.filter(place => 
+    ['이벤트&페스티벌'].includes(place.category)
   )
 };
