@@ -248,7 +248,6 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
             >
               <div className="text-2xl mb-1">🍜</div>
               <div className="text-sm font-medium">맛집</div>
-              <div className="text-xs text-muted-foreground">{placesByType.restaurant.length}곳</div>
             </Card>
             <Card 
               className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
@@ -256,7 +255,6 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
             >
               <div className="text-2xl mb-1">🏛️</div>
               <div className="text-sm font-medium">명소</div>
-              <div className="text-xs text-muted-foreground">{placesByType.attraction.length}곳</div>
             </Card>
             <Card 
               className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
@@ -264,7 +262,6 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
             >
               <div className="text-2xl mb-1">🛍️</div>
               <div className="text-sm font-medium">쇼핑</div>
-              <div className="text-xs text-muted-foreground">{placesByType.shopping.length}곳</div>
             </Card>
             <Card 
               className="p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors"
@@ -272,7 +269,6 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
             >
               <div className="text-2xl mb-1">☕</div>
               <div className="text-sm font-medium">카페 & 디저트</div>
-              <div className="text-xs text-muted-foreground">{placesByType.cafe.length}곳</div>
             </Card>
           </div>
         </div>
