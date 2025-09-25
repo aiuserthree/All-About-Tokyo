@@ -1065,23 +1065,6 @@ export const attractionPlaces: Place[] = [
 
 // 추가 관광명소
 export const additionalAttractionPlaces: Place[] = [
-  {
-    id: "additional-attraction-1",
-    title: "아사쿠사 센소지",
-    category: "사찰",
-    description: "도쿄 대표 사찰 + 나카미세 거리",
-    image: "/image/아사쿠사 센소지.png",
-    distance: "0m",
-    price: "무료",
-    rating: 4.6,
-    openTime: "6:00-17:00",
-    tags: ["사찰", "전통", "나카미세"],
-    lat: 35.7148,
-    lng: 139.7967,
-    address: "도쿄도 다이토구 아사쿠사 2-3-1",
-    location: "asakusa",
-    mapUrl: "https://maps.app.goo.gl/3Jb8WDgRNV7c5NG97"
-  },
 
   {
     id: "additional-attraction-2",
@@ -1120,24 +1103,6 @@ export const additionalAttractionPlaces: Place[] = [
     referenceUrl: "https://blog.naver.com/artmudesign/223542054015"
   },
 
-  {
-    id: "additional-attraction-4",
-    title: "시부야 스카이",
-    category: "전망대",
-    description: "노을/야경명소 필수방문!!",
-    image: "/image/시부야 스카이.png",
-    distance: "0m",
-    price: "2,000엔",
-    rating: 4.8,
-    openTime: "10:00-22:30",
-    tags: ["전망대", "야경", "예약필수"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 2-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/685UiV47F9qTfyhz9",
-    referenceUrl: "https://www.klook.com/ko/activity/70672-shibuya-sky-tokyo/"
-  },
 
   {
     id: "additional-attraction-5",
@@ -1196,24 +1161,6 @@ export const additionalAttractionPlaces: Place[] = [
     referenceUrl: "https://blog.naver.com/pal0608/223567263870"
   },
 
-  {
-    id: "additional-attraction-8",
-    title: "다이바시티 도쿄 프라자",
-    category: "랜드마크",
-    description: "건담 앞에서 사진찍기",
-    image: "/image/다이바시티 도쿄 프라자.png",
-    distance: "200m",
-    price: "무료",
-    rating: 4.4,
-    openTime: "24시간",
-    tags: ["건담", "사진", "랜드마크"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 4-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/u4SKgK1RxDKLmdm3A",
-    referenceUrl: "https://m.blog.naver.com/melodytravel/223903888406"
-  }
 ];
 
 // 쇼핑 & 거리 데이터
