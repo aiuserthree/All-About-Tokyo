@@ -726,23 +726,6 @@ export const cafePlaces: Place[] = [
 
 // 추가 카페 & 디저트
 export const additionalCafePlaces: Place[] = [
-  {
-    id: "additional-cafe-1",
-    title: "네즈카페",
-    category: "카페",
-    description: "미술관 속 카페, 숲 구경 가능",
-    image: "/image/네즈카페.png",
-    distance: "200m",
-    price: "800엔",
-    rating: 4.4,
-    openTime: "10:00-18:00",
-    tags: ["카페", "미술관", "자연"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 4-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/zpF12bPvm4ejUc3w7"
-  },
 
   {
     id: "additional-cafe-2",
@@ -763,24 +746,6 @@ export const additionalCafePlaces: Place[] = [
     referenceUrl: "http://lookingfor.tistory.com/entry/Tokyo-Fuglen-Coffee"
   },
 
-  {
-    id: "additional-cafe-3",
-    title: "스타벅스 리저브 로스터리",
-    category: "카페",
-    description: "전 세계에 6개뿐인 특별한 매장",
-    image: "/image/스타벅스 리저브 로스터리.png",
-    distance: "300m",
-    price: "1,200엔",
-    rating: 4.7,
-    openTime: "7:00-22:00",
-    tags: ["카페", "스타벅스", "특별매장"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 6-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/DR27ybqzbsmXQZ1A6",
-    referenceUrl: "https://caffemocha.tistory.com/entry/%EB%8F%84%EC%BF%84-%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4-%EB%A6%AC%EC%A0%80%EB%B8%8C-%EB%A1%9C%EC%8A%A4%ED%84%B0%EB%A6%AC-%EA%B0%80%EC%9D%B4%EB%93%9C"
-  },
 
   {
     id: "additional-cafe-4",
