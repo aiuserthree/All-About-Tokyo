@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Plus, Plane, X, Home, MessageCircle, Hotel, Radio, BookOpen } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Plane, X, Home, MessageCircle, Hotel, Radio, BookOpen, ChevronUp } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
@@ -14,9 +14,36 @@ interface FloatingMenuProps {
 
 export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick, onAIChatClick, onLiveInfoClick, onJapaneseClick }: FloatingMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // 스크롤 감지
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      setIsScrolled(scrollTop > 300);
+    };
+
+    // 초기 체크
+    handleScroll();
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', handleScroll);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const handleMenuClick = (callback: (() => void) | undefined) => {
@@ -30,7 +57,7 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
     <div className="fixed bottom-20 right-4 z-50">
       {/* Menu Items */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 space-y-3">
+        <div className="absolute bottom-16 right-0 space-y-3 z-[100]">
           <Card className="shadow-lg border border-border/50">
             <CardContent className="p-2 space-y-2">
               <Button
@@ -116,6 +143,21 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
           <Plus className="w-6 h-6 text-primary-foreground" />
         )}
       </Button>
+
+      {/* Scroll to Top Button - FAB 버튼 위에 배치 */}
+      {isScrolled && !isOpen && (
+        <div className="absolute bottom-16 right-0 z-[60]">
+          <Button
+            onClick={scrollToTop}
+            className="w-14 h-14 rounded-full shadow-lg transition-all duration-200 border-2 border-black"
+            style={{ backgroundColor: '#A0A0A0' }}
+            size="icon"
+            aria-label="맨 위로 이동"
+          >
+            <ChevronUp className="w-6 h-6 text-white" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

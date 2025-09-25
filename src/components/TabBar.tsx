@@ -15,7 +15,7 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border">
+    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50">
       <div className="flex items-center justify-around px-4 py-2 max-w-md mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
