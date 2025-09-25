@@ -491,24 +491,6 @@ export const additionalRestaurantPlaces: Place[] = [
     referenceUrl: "https://www.instagram.com/reel/DHKrYgRydx2/?utm_source=ig_web_copy_link"
   },
 
-  {
-    id: "additional-food-4",
-    title: "츠지한 도쿄 미드타운점",
-    category: "카이센동 전문점",
-    description: "카이센동 전문점",
-    image: "/image/츠지한 도쿄 미드타운점.png",
-    distance: "300m",
-    price: "2,500엔",
-    rating: 4.5,
-    openTime: "11:00-22:00",
-    tags: ["카이센동", "미드타운", "오자츠케"],
-    lat: 35.6762,
-    lng: 139.6503,
-    address: "도쿄도 지요다구 긴자 5-1-1",
-    location: "ginza",
-    mapUrl: "https://maps.app.goo.gl/MtYpQWXDdH4WHNrw6",
-    referenceUrl: "https://m.blog.naver.com/thwnd126/223402648573"
-  },
 
   {
     id: "additional-food-5",
