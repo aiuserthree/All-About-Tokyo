@@ -7,6 +7,7 @@ import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Search } from "lucide-react";
 import { placesByLocation, placesByType } from "../data/tokyoLocations";
+import { getOptimalPlaceImage } from "../utils/mapImageGenerator";
 
 export function EatScreen() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);

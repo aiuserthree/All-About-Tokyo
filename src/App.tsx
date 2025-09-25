@@ -15,6 +15,9 @@ import { HotelInfoScreen } from "./screens/HotelInfoScreen";
 import { LocationBasedScreen } from "./screens/LocationBasedScreen";
 import { TokyoLiveInfoScreen } from "./screens/TokyoLiveInfoScreen";
 import { JapaneseScreen } from "./screens/JapaneseScreen";
+import { Day1Screen } from "./screens/Day1Screen";
+import { Day2Screen } from "./screens/Day2Screen";
+import { Day3Screen } from "./screens/Day3Screen";
 
 export default function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
@@ -25,6 +28,9 @@ export default function App() {
   const [showLocationBased, setShowLocationBased] = useState(false);
   const [showLiveInfo, setShowLiveInfo] = useState(false);
   const [showJapanese, setShowJapanese] = useState(false);
+  const [showDay1, setShowDay1] = useState(false);
+  const [showDay2, setShowDay2] = useState(false);
+  const [showDay3, setShowDay3] = useState(false);
 
   // Simulate onboarding completion check
   useEffect(() => {
@@ -47,6 +53,9 @@ export default function App() {
     setShowLocationBased(false);
     setShowLiveInfo(false);
     setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    setShowDay3(false);
     // 탭 변경 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -58,6 +67,9 @@ export default function App() {
     setShowLocationBased(false);
     setShowLiveInfo(false);
     setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    setShowDay3(false);
     // AI 채팅 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -137,6 +149,60 @@ export default function App() {
     setShowJapanese(false);
   };
 
+  const handleDay1Click = () => {
+    setShowDay1(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    setShowLiveInfo(false);
+    setShowJapanese(false);
+    setShowDay2(false);
+    setShowDay3(false);
+    // Day 1 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDay1Back = () => {
+    setShowDay1(false);
+  };
+
+  const handleDay2Click = () => {
+    setShowDay2(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    setShowLiveInfo(false);
+    setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay3(false);
+    // Day 2 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDay2Back = () => {
+    setShowDay2(false);
+  };
+
+  const handleDay3Click = () => {
+    setShowDay3(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    setShowLiveInfo(false);
+    setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    // Day 3 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDay3Back = () => {
+    setShowDay3(false);
+  };
+
   const handleHomeClick = () => {
     setActiveTab("home");
     setShowAIChat(false);
@@ -151,6 +217,19 @@ export default function App() {
 
   const handleNavigateToTab = (tabIndex: number) => {
     const tabs = ["home", "eat", "see", "shop", "cafe", "dessert", "essentials"];
+    
+    // Day 화면 처리
+    if (tabIndex === 8) {
+      handleDay1Click();
+      return;
+    } else if (tabIndex === 9) {
+      handleDay2Click();
+      return;
+    } else if (tabIndex === 10) {
+      handleDay3Click();
+      return;
+    }
+    
     if (tabs[tabIndex]) {
       setActiveTab(tabs[tabIndex]);
       setShowAIChat(false);
@@ -159,6 +238,9 @@ export default function App() {
       setShowLocationBased(false);
       setShowLiveInfo(false);
       setShowJapanese(false);
+      setShowDay1(false);
+      setShowDay2(false);
+      setShowDay3(false);
       // 탭으로 이동 시 최상단으로 스크롤
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -260,6 +342,57 @@ export default function App() {
     return (
       <div className="max-w-md mx-auto min-h-screen bg-background relative">
         <JapaneseScreen onBack={handleJapaneseBack} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+          onJapaneseClick={handleJapaneseClick}
+        />
+      </div>
+    );
+  }
+
+  // Show Day 1 Screen
+  if (showDay1) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <Day1Screen onBack={handleDay1Back} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+          onJapaneseClick={handleJapaneseClick}
+        />
+      </div>
+    );
+  }
+
+  // Show Day 2 Screen
+  if (showDay2) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <Day2Screen onBack={handleDay2Back} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+          onJapaneseClick={handleJapaneseClick}
+        />
+      </div>
+    );
+  }
+
+  // Show Day 3 Screen
+  if (showDay3) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <Day3Screen onBack={handleDay3Back} />
         <FloatingMenu 
           onFlightInfoClick={handleFlightInfoClick}
           onHotelInfoClick={handleHotelInfoClick}

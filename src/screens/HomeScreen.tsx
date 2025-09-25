@@ -6,6 +6,7 @@ import { placesByType } from "../data/tokyoLocations";
 import { useState, useEffect } from "react";
 import { getTokyoWeather, getWeatherRecommendation, WeatherData } from "../services/weatherService";
 import { MapPin } from "lucide-react";
+import { getOptimalPlaceImage } from "../utils/mapImageGenerator";
 
 interface HomeScreenProps {
   onNavigateToTab?: (tabIndex: number) => void;
@@ -90,77 +91,23 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreen
       
       <div className="px-4 space-y-3">
         {places.map((place, index) => (
-          <Card 
+          <PlaceCard
             key={`${title}-${index}`}
-            className="overflow-hidden transition-transform hover:scale-[1.02]"
-          >
-            <div className="relative h-28 bg-muted">
-              <img
-                src={place.image}
-                alt={place.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-2 right-2 bg-background/90 px-2 py-1 rounded-full text-xs">
-                ★ {place.rating}
-              </div>
-            </div>
-            
-            <div className="p-3 space-y-2">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h4 className="font-medium line-clamp-1 text-sm">{place.title}</h4>
-                  <p className="text-xs text-muted-foreground">{place.category}</p>
-                </div>
-              </div>
-              
-              <div className="space-y-1">
-                <p className="text-xs text-muted-foreground line-clamp-1">📍 {place.address}</p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <span>📍 {place.distance || "근처"}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span>💰 {place.price || "가격문의"}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap gap-1">
-                {place.tags.slice(0, 2).map((tag: string, tagIndex: number) => (
-                  <span 
-                    key={tagIndex} 
-                    className="px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* 버튼 영역 */}
-              <div className="flex gap-2 pt-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleMapClick(place);
-                  }}
-                  className="flex-1 bg-primary text-primary-foreground text-xs py-2 px-3 rounded-md hover:bg-primary/90 transition-colors"
-                >
-                  🗺️ 지도보기
-                </button>
-                {place.referenceUrl && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleReferenceClick(place);
-                    }}
-                    className="flex-1 bg-secondary text-secondary-foreground text-xs py-2 px-3 rounded-md hover:bg-secondary/90 transition-colors"
-                  >
-                    📖 자세히보기
-                  </button>
-                )}
-              </div>
-            </div>
-          </Card>
+            title={place.title}
+            category={place.category}
+            image={place.image}
+            distance={place.distance}
+            price={place.price}
+            rating={place.rating}
+            openTime={place.openTime}
+            tags={place.tags}
+            lat={place.lat}
+            lng={place.lng}
+            address={place.address}
+            mapUrl={place.mapUrl}
+            referenceUrl={place.referenceUrl}
+            onClick={() => handleMapClick(place)}
+          />
         ))}
       </div>
     </div>
@@ -222,6 +169,45 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreen
             </div>
           </Card>
           
+          {/* 3일 여행 일정 버튼들 */}
+          <div className="space-y-3">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">🗾 3일 여행 일정</h3>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <Card 
+                className="p-3 bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-200 cursor-pointer hover:shadow-md transition-all duration-200"
+                onClick={() => onNavigateToTab?.(8)} // Day 1
+              >
+                <div className="text-center space-y-2">
+                  <div className="text-2xl">🗼</div>
+                  <div className="text-sm font-semibold text-blue-800">Day 1</div>
+                  <div className="text-xs text-blue-600">도쿄타워 & 오다이바</div>
+                </div>
+              </Card>
+              <Card 
+                className="p-3 bg-gradient-to-br from-green-50 to-emerald-100 border-green-200 cursor-pointer hover:shadow-md transition-all duration-200"
+                onClick={() => onNavigateToTab?.(9)} // Day 2
+              >
+                <div className="text-center space-y-2">
+                  <div className="text-2xl">🛍️</div>
+                  <div className="text-sm font-semibold text-green-800">Day 2</div>
+                  <div className="text-xs text-green-600">시부야 & 신주쿠</div>
+                </div>
+              </Card>
+              <Card 
+                className="p-3 bg-gradient-to-br from-purple-50 to-violet-100 border-purple-200 cursor-pointer hover:shadow-md transition-all duration-200"
+                onClick={() => onNavigateToTab?.(10)} // Day 3
+              >
+                <div className="text-center space-y-2">
+                  <div className="text-2xl">🏛️</div>
+                  <div className="text-sm font-semibold text-purple-800">Day 3</div>
+                  <div className="text-xs text-purple-600">아사쿠사 & 우에노</div>
+                </div>
+              </Card>
+            </div>
+          </div>
+
           {/* 위치 기반 추천 버튼 */}
           <Card className="p-4 bg-gradient-to-r from-red-50 to-pink-50 border-red-200" style={{ border: '2px solid red' }}>
             <div className="text-center space-y-3">

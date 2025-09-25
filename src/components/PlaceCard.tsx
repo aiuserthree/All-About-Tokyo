@@ -3,6 +3,8 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { MapPin, Clock, DollarSign, ExternalLink } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { getOptimalPlaceImage } from "../utils/mapImageGenerator";
+import { useState, useEffect } from "react";
 
 interface PlaceCardProps {
   title: string;
@@ -37,19 +39,38 @@ export function PlaceCard({
   referenceUrl,
   onClick
 }: PlaceCardProps) {
+  const [optimalImage, setOptimalImage] = useState<string>(image || '');
+
+  useEffect(() => {
+    const loadOptimalImage = async () => {
+      try {
+        const imageUrl = await getOptimalPlaceImage({ 
+          lat: lat || 0, 
+          lng: lng || 0, 
+          title, 
+          image 
+        });
+        setOptimalImage(imageUrl);
+      } catch (error) {
+        console.warn('이미지 로딩 실패:', error);
+        setOptimalImage(image || '');
+      }
+    };
+
+    loadOptimalImage();
+  }, [lat, lng, title, image]);
+
   return (
     <Card 
       className="overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
       onClick={onClick}
     >
       <div className="relative h-32 bg-muted">
-        {image && (
-          <ImageWithFallback
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-        )}
+        <ImageWithFallback
+          src={optimalImage}
+          alt={title}
+          className="w-full h-full object-cover"
+        />
         {rating && (
           <div className="absolute top-2 right-2 bg-background/90 px-2 py-1 rounded-full text-xs">
             ★ {rating}
