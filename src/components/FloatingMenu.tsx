@@ -150,7 +150,7 @@ export function FloatingMenu({ onFlightInfoClick, onHotelInfoClick, onHomeClick,
           <Button
             onClick={scrollToTop}
             className="w-14 h-14 rounded-full shadow-lg transition-all duration-200 border-2 border-black"
-            style={{ backgroundColor: '#A0A0A0' }}
+            style={{ backgroundColor: 'rgba(192, 192, 192, 0.8)' }}
             size="icon"
             aria-label="맨 위로 이동"
           >
