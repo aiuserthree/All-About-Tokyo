@@ -242,7 +242,7 @@ export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | und
     "신주쿠": ["신주쿠", "곤파치", "하카타"],
     "멘야스고": ["멘야스고"],
     "곤파치": ["곤파치"],
-    "아사쿠사": ["아사쿠사", "센소지"],
+    "아사쿠사": ["아사쿠사", "센소지", "아사쿠사 센소지"],
     "우에노": ["우에노", "우에노공원"],
     "긴자": ["긴자", "긴자 식스"]
   };
@@ -259,6 +259,20 @@ export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | und
         if (matchedPlace) return matchedPlace;
       }
     }
+  }
+
+  // 정확한 이름 매칭 (우선순위 높음)
+  const exactMatch = allPlaces.find(place => 
+    place.title === placeName
+  );
+  if (exactMatch) return exactMatch;
+
+  // 특별한 케이스들 처리
+  if (placeName === "아사쿠사 센소지") {
+    const asakusaSensoji = allPlaces.find(place => 
+      place.title.includes("아사쿠사") && place.title.includes("센소지")
+    );
+    if (asakusaSensoji) return asakusaSensoji;
   }
 
   // 일반적인 검색
