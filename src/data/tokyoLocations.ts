@@ -804,24 +804,6 @@ export const additionalCafePlaces: Place[] = [
     referenceUrl: "https://blog.naver.com/8910a/223995086983?trackingCode=rss"
   },
 
-  {
-    id: "additional-dessert-1",
-    title: "Daily Chiko",
-    category: "디저트",
-    description: "소프트 아이스크림",
-    image: "/image/Daily Chiko.png",
-    distance: "150m",
-    price: "500엔",
-    rating: 4.4,
-    openTime: "10:00-20:00",
-    tags: ["아이스크림", "디저트", "인스타"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 10-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/fcWmy9Y7VjWC4zLf9",
-    referenceUrl: "https://www.instagram.com/reel/DKPHDGtStjL/?igsh=cjgxaXExamFnYXY4"
-  },
 
   {
     id: "additional-dessert-2",
