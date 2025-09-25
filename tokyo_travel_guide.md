@@ -94,11 +94,7 @@
   - 📝 [후기](https://blog.naver.com/gkdbsrud123/223745679896)
 
 ### 서양식 & 퓨전
-- **American Diner Andra**
-  - 📍 [지도](https://maps.app.goo.gl/DrjWgHXuNRn44eV96)
-  - 🍔 철판 치즈햄버거
-
-- **AmericanDinerAndra** (별점)
+- **AmericanDinerAndra**
   - 📍 [지도](https://maps.app.goo.gl/Zo3BDaRLLysu67LcA)
   - 🍔 철판 치즈 버거
   - 💡 세계 곳곳에서 공부한 버거 매니아의 창작 버거
@@ -180,7 +176,7 @@
   - 💡 화이트 오물렛 토스트, 치즈 토스트+꿀 추천
   - 📝 [후기](https://blog.naver.com/ko4791917/223488087435)
 
-- **neel신궁전**
+- **neel神宮前**
   - 📍 [지도](https://maps.app.goo.gl/SSJpR2DKQbyCvyiC9)
   - 🥪 브런치
   - 💡 가츠산도, 크레페 필수 주문
