@@ -16,7 +16,10 @@
     },
     {
       "src": "/image/(.*)",
-      "dest": "/image/$1"
+      "dest": "/image/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/(.*)",
