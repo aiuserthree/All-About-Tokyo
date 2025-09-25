@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TabBar } from "./components/TabBar";
 import { FloatingMenu } from "./components/FloatingMenu";
 import { OnboardingScreen } from "./screens/OnboardingScreen";
@@ -18,6 +18,8 @@ import { JapaneseScreen } from "./screens/JapaneseScreen";
 import { Day1Screen } from "./screens/Day1Screen";
 import { Day2Screen } from "./screens/Day2Screen";
 import { Day3Screen } from "./screens/Day3Screen";
+import { PhotospotScreen } from "./screens/PhotospotScreen";
+import { EventsScreen } from "./screens/EventsScreen";
 
 export default function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
@@ -31,6 +33,8 @@ export default function App() {
   const [showDay1, setShowDay1] = useState(false);
   const [showDay2, setShowDay2] = useState(false);
   const [showDay3, setShowDay3] = useState(false);
+  const [showPhotospot, setShowPhotospot] = useState(false);
+  const [showEvents, setShowEvents] = useState(false);
 
   // Simulate onboarding completion check
   useEffect(() => {
@@ -56,6 +60,8 @@ export default function App() {
     setShowDay1(false);
     setShowDay2(false);
     setShowDay3(false);
+    setShowPhotospot(false);
+    setShowEvents(false);
     // 탭 변경 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -201,6 +207,46 @@ export default function App() {
 
   const handleDay3Back = () => {
     setShowDay3(false);
+  };
+
+  const handlePhotospotClick = () => {
+    setShowPhotospot(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    setShowLiveInfo(false);
+    setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    setShowDay3(false);
+    setShowEvents(false);
+    // 포토스팟 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePhotospotBack = () => {
+    setShowPhotospot(false);
+  };
+
+  const handleEventsClick = () => {
+    setShowEvents(true);
+    setShowAIChat(false);
+    setShowFlightInfo(false);
+    setShowHotelInfo(false);
+    setShowLocationBased(false);
+    setShowLiveInfo(false);
+    setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    setShowDay3(false);
+    setShowPhotospot(false);
+    // 이벤트 화면으로 이동 시 최상단으로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleEventsBack = () => {
+    setShowEvents(false);
   };
 
   const handleHomeClick = () => {
@@ -405,11 +451,50 @@ export default function App() {
     );
   }
 
+  // Show Photospot Screen
+  if (showPhotospot) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <PhotospotScreen onBack={handlePhotospotBack} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+          onJapaneseClick={handleJapaneseClick}
+        />
+      </div>
+    );
+  }
+
+  // Show Events Screen
+  if (showEvents) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-background relative">
+        <EventsScreen onBack={handleEventsBack} />
+        <FloatingMenu 
+          onFlightInfoClick={handleFlightInfoClick}
+          onHotelInfoClick={handleHotelInfoClick}
+          onHomeClick={handleHomeClick}
+          onAIChatClick={handleFABClick}
+          onLiveInfoClick={handleLiveInfoClick}
+          onJapaneseClick={handleJapaneseClick}
+        />
+      </div>
+    );
+  }
+
   // Main app content
   const renderScreen = () => {
     switch (activeTab) {
       case "home":
-        return <HomeScreen onNavigateToTab={handleNavigateToTab} onLocationBasedClick={handleLocationBasedClick} />;
+        return <HomeScreen 
+          onNavigateToTab={handleNavigateToTab} 
+          onLocationBasedClick={handleLocationBasedClick}
+          onPhotospotClick={handlePhotospotClick}
+          onEventsClick={handleEventsClick}
+        />;
       case "eat":
         return <EatScreen />;
       case "see":

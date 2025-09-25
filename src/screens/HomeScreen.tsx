@@ -11,9 +11,11 @@ import { getOptimalPlaceImage } from "../utils/mapImageGenerator";
 interface HomeScreenProps {
   onNavigateToTab?: (tabIndex: number) => void;
   onLocationBasedClick?: () => void;
+  onPhotospotClick?: () => void;
+  onEventsClick?: () => void;
 }
 
-export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreenProps) {
+export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotClick, onEventsClick }: HomeScreenProps) {
   // 디버깅용 콘솔 로그
   console.log('HomeScreen props:', { onNavigateToTab, onLocationBasedClick });
   
@@ -206,6 +208,30 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick }: HomeScreen
                 </div>
               </Card>
             </div>
+          </div>
+
+          {/* 포토스팟 & 이벤트 카드 */}
+          <div className="grid grid-cols-2 gap-3">
+            <Card 
+              className="p-4 bg-gradient-to-br from-pink-50 to-rose-100 border-pink-200 cursor-pointer hover:shadow-md transition-all duration-200"
+              onClick={onPhotospotClick || (() => console.log('onPhotospotClick not provided'))}
+            >
+              <div className="text-center space-y-2">
+                <div className="text-2xl">📸</div>
+                <div className="text-sm font-semibold text-pink-800">포토스팟</div>
+                <div className="text-xs text-pink-600">인스타 명소</div>
+              </div>
+            </Card>
+            <Card 
+              className="p-4 bg-gradient-to-br from-purple-50 to-violet-100 border-purple-200 cursor-pointer hover:shadow-md transition-all duration-200"
+              onClick={onEventsClick || (() => console.log('onEventsClick not provided'))}
+            >
+              <div className="text-center space-y-2">
+                <div className="text-2xl">🎪</div>
+                <div className="text-sm font-semibold text-purple-800">이벤트</div>
+                <div className="text-xs text-purple-600">페스티벌 & 행사</div>
+              </div>
+            </Card>
           </div>
 
           {/* 위치 기반 추천 버튼 */}
