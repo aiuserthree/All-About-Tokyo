@@ -896,66 +896,7 @@ export const additionalAttractionPlaces: Place[] = [
     location: "other",
     mapUrl: "https://maps.app.goo.gl/NpBzJEhtsGp9wweWA",
     referenceUrl: "https://blog.naver.com/artmudesign/223542054015"
-  },
-
-
-  {
-    id: "additional-attraction-5",
-    title: "시부야 스크램블 스퀘어",
-    category: "전망대",
-    description: "전망대 + 하이엔드 쇼핑",
-    image: "/image/시부야 스크램블 스퀘어.png",
-    distance: "100m",
-    price: "무료",
-    rating: 4.6,
-    openTime: "10:00-21:00",
-    tags: ["전망대", "쇼핑", "하이엔드"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 2-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/WxpoGLGYHef58RW78",
-    referenceUrl: "https://nightscape.tokyo/ko/shibuya/shibuya-scramble-square-12f/"
-  },
-
-  {
-    id: "additional-attraction-6",
-    title: "롯폰기 힐즈 스카이덱",
-    category: "전망대",
-    description: "도시 야경",
-    image: "/image/롯폰기 힐즈 스카이덱.png",
-    distance: "0m",
-    price: "1,800엔",
-    rating: 4.7,
-    openTime: "10:00-23:00",
-    tags: ["전망대", "야경", "롯폰기"],
-    lat: 35.6654,
-    lng: 139.7296,
-    address: "도쿄도 미나토구 롯폰기 6-10-1",
-    location: "roppongi",
-    mapUrl: "https://maps.app.goo.gl/yYNpK5sRq3Srtzc9A",
-    referenceUrl: "https://blog.naver.com/bgh6825/222969751537"
-  },
-
-  {
-    id: "additional-attraction-7",
-    title: "팀랩 플래닛 도쿄",
-    category: "전시관",
-    description: "몰입형 전시 + 인스타 명소",
-    image: "/image/팀랩 플래닛 도쿄.png",
-    distance: "150m",
-    price: "3,200엔",
-    rating: 4.5,
-    openTime: "10:00-19:00",
-    tags: ["전시", "인스타", "몰입형"],
-    lat: 35.6580,
-    lng: 139.7016,
-    address: "도쿄도 시부야구 시부야 3-1-1",
-    location: "shibuya",
-    mapUrl: "https://maps.app.goo.gl/guLG2t7N44ZoZe866",
-    referenceUrl: "https://blog.naver.com/pal0608/223567263870"
-  },
-
+  }
 ];
 
 // 쇼핑 & 거리 데이터
