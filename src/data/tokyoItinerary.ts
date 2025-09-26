@@ -178,9 +178,9 @@ export const day3Itinerary: DayItinerary = {
     {
       id: "day3-2",
       time: "11:00",
-      place: "치즈철판버거",
+      place: "AmericanDinerAndra",
       activity: "점심",
-      notes: "도쿄역 근처 치즈철판버거 맛집"
+      notes: "세계 곳곳에서 공부한 버거 매니아의 창작 버거"
     },
     {
       id: "day3-3",
