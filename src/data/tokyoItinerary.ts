@@ -178,16 +178,16 @@ export const day3Itinerary: DayItinerary = {
     {
       id: "day3-2",
       time: "11:00",
-      place: "AmericanDinerAndra",
+      place: "니혼바시 돈카츠 하지메 하나레",
       activity: "점심",
-      notes: "세계 곳곳에서 공부한 버거 매니아의 창작 버거"
+      notes: "1등 카츠동 맛집, 강남 유튜브 등장"
     },
     {
       id: "day3-3",
       time: "13:00",
-      place: "아사쿠사 센소지",
-      activity: "전통 문화 체험",
-      notes: "• 아사쿠사 센소지\n• 우에노공원\n• 긴자 쇼핑"
+      place: "도쿄타워",
+      activity: "관광",
+      notes: "도쿄의 상징 - 다마치역에서 걸어서, 육교뷰 추천"
     },
     {
       id: "day3-4",
@@ -243,6 +243,7 @@ export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | und
     "긴자 식스": ["긴자 식스", "GINZA SIX"],
     "AmericanDinerAndra": ["AmericanDinerAndra"],
     "도쿄타워": ["도쿄타워"],
+    "니혼바시 돈카츠 하지메 하나레": ["니혼바시 돈카츠 하지메 하나레"],
     "오다이바": ["다이바시티", "건담"],
     "몬자사토": ["몬자사토"],
     "츠지한": ["츠지한"],
