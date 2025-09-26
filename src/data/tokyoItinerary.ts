@@ -22,8 +22,8 @@ export interface DayItinerary {
 // 1일차 일정
 export const day1Itinerary: DayItinerary = {
   day: 1,
-  title: "공항 → 숙소 → 도쿄타워 → 오다이바 → 츠키시마",
-  description: "첫날 도쿄의 대표 랜드마크들을 둘러보며 도쿄의 매력을 느껴보세요",
+  title: "공항 → 숙소 → 아사쿠사 → 긴자",
+  description: "첫날 도쿄의 전통과 현대를 모두 경험할 수 있는 아사쿠사와 긴자 코스",
   items: [
     {
       id: "day1-1",
@@ -34,69 +34,60 @@ export const day1Itinerary: DayItinerary = {
     },
     {
       id: "day1-2", 
-      time: "15:00",
-      place: "츠지한 도쿄 미드타운점",
+      time: "14:30",
+      place: "츠지한",
       activity: "점심식사",
-      notes: "카이센동 전문점 - 미드타운점이 웨이팅 덜함"
+      notes: "숙소 근처"
     },
     {
       id: "day1-3",
-      time: "16:30", 
-      place: "도쿄타워 세븐일레븐",
-      activity: "포토스팟 도착",
+      time: "16:00", 
+      place: "아사쿠사 센소지",
+      activity: "사원 관광 및 산책",
       travelTime: "지하철 30분",
-      notes: "세븐일레븐과 도쿄타워 조합 포토스팟"
+      notes: "전통 사원 체험"
     },
     {
       id: "day1-4",
-      time: "17:00",
-      place: "도쿄타워",
-      activity: "일몰 사진 촬영",
-      notes: "도쿄의 상징적인 랜드마크"
+      time: "18:30",
+      place: "AmericanDinerAndra",
+      activity: "저녁식사",
+      travelTime: "지하철 30분",
+      notes: "맛있는 저녁식사"
     },
     {
       id: "day1-5",
-      time: "18:30",
-      place: "오다이바",
-      activity: "건담 구경 및 사진 촬영", 
-      travelTime: "50분",
-      notes: "다이바시티 도쿄 프라자에서 건담 앞에서 사진"
+      time: "19:30",
+      place: "AmericanDinerAndra",
+      activity: "식사 마무리",
+      notes: "저녁식사 완료"
     },
     {
       id: "day1-6",
-      time: "19:15",
-      place: "오다이바 해변",
-      activity: "해변 산책",
-      travelTime: "도보 15분",
-      notes: "야경 감상하기 좋은 해변"
+      time: "20:00",
+      place: "긴자",
+      activity: "쇼핑 및 거리 구경",
+      notes: "명품 쇼핑"
     },
     {
       id: "day1-7",
-      time: "19:30",
-      place: "해변 카페",
-      activity: "커피/아이스크림과 야경 감상",
-      notes: "오다이바 해변 근처 카페"
+      time: "21:00",
+      place: "긴자 맥주집",
+      activity: "기가맥힌 맥주집에서 음주",
+      notes: "맥주와 함께하는 저녁"
     },
     {
       id: "day1-8",
-      time: "21:00",
-      place: "몬자사토",
-      activity: "몬자야키 저녁식사",
-      travelTime: "지하철 40분",
-      notes: "전통 몬자야키 맛집"
-    },
-    {
-      id: "day1-9",
-      time: "22:30",
-      place: "숙소",
-      activity: "편의점 쇼핑 후 숙소에서 2차",
-      notes: "편의점에서 간식과 음료 구매"
+      time: "22:00",
+      place: "롯폰기/숙소",
+      activity: "2차 또는 숙소 귀가",
+      notes: "선택"
     }
   ],
   tips: [
     "지하철 패스 구매 권장",
-    "도쿄타워 일몰 시간 확인 필수",
-    "오다이바는 야경이 아름다우니 충분히 감상하세요"
+    "아사쿠사는 전통 일본 문화를 체험하기 좋은 곳",
+    "긴자는 고급 쇼핑과 미슐랭 맛집이 많습니다"
   ]
 };
 
@@ -230,8 +221,27 @@ export const allItineraries: DayItinerary[] = [
 
 // 일정별 장소 매핑 함수
 export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | undefined => {
+  // 정확한 이름 매칭 (최우선순위)
+  const exactMatch = allPlaces.find(place => 
+    place.title === placeName
+  );
+  if (exactMatch) return exactMatch;
+
+  // 긴자 맥주집은 장소 정보 제공하지 않음 (최우선 처리)
+  if (placeName === "긴자 맥주집" || placeName.includes("맥주집")) {
+    return undefined;
+  }
+
+  // 롯폰기/숙소는 장소 정보 제공하지 않음
+  if (placeName === "롯폰기/숙소") {
+    return undefined;
+  }
+
   // 정확한 매칭을 위한 키워드 매핑
   const placeMappings: { [key: string]: string[] } = {
+    "아사쿠사 센소지": ["아사쿠사 센소지", "센소지"],
+    "긴자 식스": ["긴자 식스", "GINZA SIX"],
+    "AmericanDinerAndra": ["AmericanDinerAndra"],
     "도쿄타워": ["도쿄타워"],
     "오다이바": ["다이바시티", "건담"],
     "몬자사토": ["몬자사토"],
@@ -242,16 +252,17 @@ export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | und
     "신주쿠": ["신주쿠", "곤파치", "하카타"],
     "멘야스고": ["멘야스고"],
     "곤파치": ["곤파치"],
-    "아사쿠사": ["아사쿠사", "센소지", "아사쿠사 센소지"],
+    "아사쿠사": ["아사쿠사"],
     "우에노": ["우에노", "우에노공원"],
-    "긴자": ["긴자", "긴자 식스"]
+    "긴자": ["긴자 식스", "GINZA SIX"]
   };
 
-  // 매핑된 키워드로 검색
+  // 매핑된 키워드로 검색 (정확한 매칭 우선)
   for (const [key, keywords] of Object.entries(placeMappings)) {
-    if (placeName.includes(key)) {
+    if (placeName === key || placeName.includes(key)) {
       for (const keyword of keywords) {
         const matchedPlace = allPlaces.find(place => 
+          place.title === keyword || 
           place.title.includes(keyword) || 
           place.address.includes(keyword) ||
           place.tags.some(tag => tag.includes(keyword))
@@ -261,11 +272,14 @@ export const getPlaceInfo = (placeName: string, allPlaces: Place[]): Place | und
     }
   }
 
-  // 정확한 이름 매칭 (우선순위 높음)
-  const exactMatch = allPlaces.find(place => 
-    place.title === placeName
-  );
-  if (exactMatch) return exactMatch;
+  // 긴자 특별 처리 - 긴자 식스를 우선적으로 반환
+  if (placeName === "긴자") {
+    const ginzaSix = allPlaces.find(place => 
+      place.title.includes("긴자 식스") || place.title.includes("GINZA SIX")
+    );
+    if (ginzaSix) return ginzaSix;
+  }
+
 
   // 특별한 케이스들 처리
   if (placeName === "아사쿠사 센소지") {
