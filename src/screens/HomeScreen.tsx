@@ -182,9 +182,9 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
                 onClick={() => onNavigateToTab?.(8)} // Day 1
               >
                 <div className="text-center space-y-2">
-                  <div className="text-2xl">🗼</div>
+                  <div className="text-2xl">⛩️</div>
                   <div className="text-sm font-semibold text-blue-800">Day 1</div>
-                  <div className="text-xs text-blue-600">도쿄타워 & 오다이바</div>
+                  <div className="text-xs text-blue-600">아사쿠사 & 긴자</div>
                 </div>
               </Card>
               <Card 
