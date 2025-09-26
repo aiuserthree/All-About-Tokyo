@@ -257,6 +257,11 @@ export default function App() {
     setShowLocationBased(false);
     setShowLiveInfo(false);
     setShowJapanese(false);
+    setShowDay1(false);
+    setShowDay2(false);
+    setShowDay3(false);
+    setShowPhotospot(false);
+    setShowEvents(false);
     // 홈 화면으로 이동 시 최상단으로 스크롤
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

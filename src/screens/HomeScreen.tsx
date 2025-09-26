@@ -204,7 +204,7 @@ export function HomeScreen({ onNavigateToTab, onLocationBasedClick, onPhotospotC
                 <div className="text-center space-y-2">
                   <div className="text-2xl">🏛️</div>
                   <div className="text-sm font-semibold text-purple-800">Day 3</div>
-                  <div className="text-xs text-purple-600">아사쿠사 & 우에노</div>
+                  <div className="text-xs text-purple-600">긴자 & 도쿄타워</div>
                 </div>
               </Card>
             </div>
