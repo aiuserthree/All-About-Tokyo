@@ -53,7 +53,7 @@ export function Day3Screen({ onBack }: Day3ScreenProps) {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-purple-800">🏛️ Day 3</h1>
+              <h1 className="text-2xl font-bold text-purple-800">🗼 Day 3</h1>
               <p className="text-sm text-muted-foreground">{itinerary.title}</p>
             </div>
           </div>
